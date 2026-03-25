@@ -200,6 +200,17 @@ body{background:var(--bg);color:var(--ink);font-family:'Noto Sans JP',sans-serif
 .prev-card .pc-date{font-size:10px;color:var(--ink3);margin-top:8px;text-align:right;}
 /* prev badge on header */
 .prev-badge{background:var(--teal3);border:1px solid var(--teal2);border-radius:8px;padding:4px 10px;font-size:11px;color:var(--teal);font-weight:700;margin-top:6px;display:inline-block;}
+/* 入金サイクル */
+.lag-box{background:var(--amber3);border:1.5px solid var(--amber);border-radius:10px;padding:14px 16px;margin-top:12px;}
+.lag-title{font-size:13px;font-weight:700;color:var(--amber);margin-bottom:10px;}
+.lag-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+.lag-item{background:var(--bg2);border-radius:8px;padding:10px 12px;text-align:center;}
+.lag-label{font-size:10px;color:var(--ink3);margin-bottom:3px;}
+.lag-val{font-family:'Zen Kaku Gothic New',sans-serif;font-size:18px;font-weight:900;color:var(--ink);}
+.lag-val.warn{color:var(--red);}
+.lag-sub{font-size:10px;color:var(--ink3);margin-top:2px;}
+.lag-warn{background:var(--red3);border-left:3px solid var(--red);border-radius:4px;padding:8px 12px;font-size:12px;color:var(--ink2);margin-bottom:8px;line-height:1.7;}
+.lag-note{font-size:11px;color:var(--ink3);line-height:1.6;}
 @media(max-width:480px){.field-row{grid-template-columns:1fr;}.s-months{font-size:44px;}.prev-card .pc-grid{grid-template-columns:1fr 1fr 1fr;}}
 </style>
 </head>
@@ -251,6 +262,16 @@ body{background:var(--bg);color:var(--ink);font-family:'Noto Sans JP',sans-serif
         <input type="number" id="monthlyExpense" placeholder="例：220" min="0" inputmode="numeric">
         <div class="hint">給与・仕入・家賃・借入返済すべて込み</div>
       </div>
+    </div>
+    <div class="field f-gap">
+      <label>売上の入金は何ヶ月後ですか？ <span class="sub-label">（黒字なのに現金が減る場合は要確認）</span></label>
+      <div class="toggle-group" id="payLagGroup">
+        <button type="button" class="toggle-btn active" data-val="0" onclick="selectToggle(this,'payLagGroup')">すぐ入金</button>
+        <button type="button" class="toggle-btn" data-val="1" onclick="selectToggle(this,'payLagGroup')">翌月</button>
+        <button type="button" class="toggle-btn" data-val="2" onclick="selectToggle(this,'payLagGroup')">2ヶ月後</button>
+        <button type="button" class="toggle-btn" data-val="3" onclick="selectToggle(this,'payLagGroup')">3ヶ月後以上</button>
+      </div>
+      <div class="hint">請求書を出してから入金されるまでの期間。BtoB取引は1〜2ヶ月後が多いです</div>
     </div>
     <div class="field f-gap">
       <label>最低限ほしい月の手取り <span class="sub-label">（万円）</span><span class="hint" style="display:inline;margin-left:6px">任意・未入力なら手残り最大を優先</span></label>
@@ -527,7 +548,7 @@ function updateEasyProfit(){
     <div class="er-val">約 ${profitEstMan.toLocaleString('ja-JP')} 万円</div>
     <div class="er-note">月売上 ${salesM}万円 × 12ヶ月 × 利益率${Math.round(margin*100)}% + 報酬年額 = 推計値です。<br>正確でなくても大丈夫です。後から修正できます。</div>`;
 }
-const SB=[[0,63000,58000],[63000,73000,68000],[73000,83000,78000],[83000,93000,88000],[93000,101000,98000],[101000,107000,104000],[107000,114000,110000],[114000,122000,118000],[122000,130000,126000],[130000,138000,134000],[138000,146000,142000],[146000,155000,150000],[155000,165000,160000],[165000,175000,170000],[175000,185000,180000],[185000,195000,190000],[195000,210000,200000],[210000,230000,220000],[230000,250000,240000],[250000,270000,260000],[270000,290000,280000],[290000,310000,300000],[310000,330000,320000],[330000,350000,340000],[350000,370000,360000],[370000,395000,380000],[395000,425000,410000],[425000,455000,440000],[455000,485000,470000],[485000,515000,500000],[515000,545000,530000],[545000,575000,560000],[575000,605000,590000],[605000,635000,620000],[635000,665000,650000],[665000,695000,680000],[695000,730000,710000],[730000,770000,750000],[770000,810000,790000],[810000,855000,830000],[855000,905000,880000],[905000,955000,930000],[955000,1005000,980000],[1005000,1055000,1030000],[1055000,1115000,1090000],[1115000,1175000,1150000],[1175000,1235000,1210000],[1235000,1295000,1270000],[1295000,1355000,1330000],[1355000,Infinity,1390000]];
+const SB=[[0,63000,58000],[63000,73000,68000],[73000,83000,78000],[83000,93000,88000],[93000,101000,98000],[101000,107000,104000],[107000,114000,110000],[114000,122000,118000],[122000,130000,126000],[130000,138000,134000],[138000,146000,142000],[146000,155000,150000],[155000,165000,160000],[165000,175000,170000],[175000,185000,180000],[185000,195000,190000],[195000,210000,200000],[210000,230000,220000],[230000,250000,240000],[250000,270000,260000],[270000,290000,280000],[290000,310000,300000],[310000,330000,320000],[330000,350000,340000],[350000,370000,360000],[370000,395000,380000],[395000,425000,410000],[425000,455000,440000],[455000,485000,470000],[485000,515000,500000],[515000,545000,530000],[545000,575000,560000],[575000,605000,590000],[605000,635000,620000],[635000,665000,650000],[665000,695000,680000],[695000,730000,710000],[730000,770000,750000],[770000,810000,790000],[810000,855000,830000],[855000,905000,880000],[905000,955000,930000],[955000,1005000,980000],[1005000,1055000,1030000],[1055000,1115000,1090000],[1115000,1175000,1150000],[1175000,1235000,1210000],[1235000,1295000,1270000],[1295000,1355000,1330000],[1355000,999999999,1390000]];
 const HR={Tokyo:0.0998,Kanagawa:0.1000,Osaka:0.1021,Aichi:0.0987,Saitama:0.1000,Chiba:0.1000,Hokkaido:0.1031,Fukuoka:0.1035,other:0.1000};
 function gH(m){const b=SB.find(b=>m>=b[0]&&m<b[1])||SB[SB.length-1];return Math.max(58000,b[2]);}
 function gP(m){const b=SB.find(b=>m>=b[0]&&m<b[1])||SB[SB.length-1];return Math.max(88000,b[2]);}
@@ -551,7 +572,8 @@ function calculate(){
     return;
   }
   // かんたんモードか数字入力モードかを判断
-  const isEasyMode=document.querySelector('#profitModeGroup .toggle-btn.active')?.dataset.mode==='easy';
+  const _pmBtn=document.querySelector('#profitModeGroup .toggle-btn.active');
+  const isEasyMode=(_pmBtn&&_pmBtn.dataset&&_pmBtn.dataset.mode==='easy');
   const pyRaw=isEasyMode
     ?(parseFloat(document.getElementById('profitYEasy').value)||0)
     :(parseFloat(document.getElementById('profitY').value)||0);
@@ -570,19 +592,72 @@ function calculate(){
   const vp=(parseFloat(document.getElementById('vatPurchase').value)||0)*10000;
   const dr=parseFloat(document.querySelector('#industryGroup .toggle-btn.active').dataset.val);
   const hp=parseFloat(document.querySelector('#homeOfficeGroup .toggle-btn.active').dataset.val)/100;
-  const hr=(parseFloat(document.getElementById('homeRent')?.value)||0)*10000;
+  const _hrEl=document.getElementById('homeRent');
+  const hr=(parseFloat(_hrEl?_hrEl.value:'')||0)*10000;
   const spY=sp*12;
 
-  // ① 資金ショート
-  const mcf=ms-me;
+  // ① 資金ショート（入金サイクルを加味）
+  const payLagBtn=document.querySelector('#payLagGroup .toggle-btn.active');
+  const payLag=payLagBtn?parseInt(payLagBtn.dataset.val):0;
+
+  // 入金ラグを考慮した実際の月次キャッシュフロー
+  // 今月の実入金 = payLag月前の売上（ここでは近似として ms を使用）
+  // 入金ラグがある場合、今月の売上はまだ入金されていない
+  // 実効収入 = ms（ただし入金ラグ分だけ先に支出が出ている）
+  const mcf=ms-me; // 帳簿上の月次収支
+  const actualInflow=payLag===0?ms:ms; // 売上自体は同じ
+  // 入金ラグによる「見かけ黒字・実質赤字」の計算
+  // 入金ラグがあると、売上増加月は資金が先に出ていく
+  const lagAdjustment=payLag>0?(ms*payLag*(-1)):0; // ラグ月数分の売上が未入金
+  const realCashFlow=mcf; // 定常状態での月次収支
+  const lagImpact=payLag>0?ms*payLag:0; // ラグによる一時的な資金圧迫額
+
   let mo=mcf>=0?999:(cb>0?Math.floor(cb/(-mcf)):0);
+
+  // 入金ラグがある場合の「黒字なのに現金が減る」リスク計算
+  // 売上が伸びている場合、毎月 ms × payLag 分の資金が先に出ていく
+  const isLagRisk=payLag>=2&&mcf>=0; // 黒字だが入金ラグがある状態
+  const lagRiskAmount=ms*payLag; // ラグによる資金圧迫の総額
+
   let sc,si,sl,sm,sdh='';
-  if(mcf>=0){sc='s-green';si='✅';sl='黒字経営';sm='今すぐ資金ショートの危険はありません。手残りをさらに最大化していきましょう。';}
-  else if(mo<=1){sc='s-red';si='🚨';sl='危険水域';sm='今月中に銀行・税理士へ緊急相談を。先手の相談ほど選択肢が増えます。';}
-  else if(mo<=3){sc='s-yellow';si='⚠️';sl='要注意';sm='3ヶ月以内に手が打てないと危険です。役員報酬の見直しと資金繰り表の整備を急いでください。';}
-  else{sc='s-green';si='🟢';sl='まだ余裕あり';sm='今すぐの危機ではありませんが、節税・報酬最適化の施策を今から仕込んでおくことをおすすめします。';}
+  if(isLagRisk){
+    // 黒字なのに現金が減るリスクがある状態
+    sc='s-yellow';si='⚠️';sl='黒字でも要注意';
+    sm=`帳簿上は黒字ですが、入金が${payLag}ヶ月後のため、売上増加に伴い現金が先に出ていく構造があります。`;
+  } else if(mcf>=0){
+    sc='s-green';si='✅';sl='黒字経営';sm='今すぐ資金ショートの危険はありません。手残りをさらに最大化していきましょう。';
+  } else if(mo<=1){
+    sc='s-red';si='🚨';sl='危険水域';sm='今月中に銀行・税理士へ緊急相談を。先手の相談ほど選択肢が増えます。';
+  } else if(mo<=3){
+    sc='s-yellow';si='⚠️';sl='要注意';sm='3ヶ月以内に手が打てないと危険です。役員報酬の見直しと資金繰り表の整備を急いでください。';
+  } else {
+    sc='s-green';si='🟢';sl='まだ余裕あり';sm='今すぐの危機ではありませんが、節税・報酬最適化の施策を今から仕込んでおくことをおすすめします。';
+  }
   if(mcf<0&&mo<999){const d=new Date(),td=new Date(d.getFullYear(),d.getMonth()+mo,1);sdh=`<div class="s-date">${td.getFullYear()}年${td.getMonth()+1}月に要注意</div>`;}
-  document.getElementById('statusBar').innerHTML=`<div class="status-card ${sc}"><div class="s-icon">${si}</div><div class="s-label">${sl}</div><div class="s-months">${mo>=999?'黒字':mo}<span class="s-unit">${mo<999?'ヶ月':''}</span></div>${sdh}<div class="s-msg">${sm}</div></div>`;
+
+  // 入金ラグリスクの表示
+  let lagHTML='';
+  if(payLag>0){
+    lagHTML=`<div class="lag-box">
+      <div class="lag-title">📊 入金サイクルの影響（${payLag}ヶ月後入金）</div>
+      <div class="lag-grid">
+        <div class="lag-item">
+          <div class="lag-label">今月売上（未入金）</div>
+          <div class="lag-val">${man(ms)}万円</div>
+          <div class="lag-sub">${payLag}ヶ月後に入金予定</div>
+        </div>
+        <div class="lag-item">
+          <div class="lag-label">現在の未入金残高（概算）</div>
+          <div class="lag-val warn">${man(ms*payLag)}万円</div>
+          <div class="lag-sub">売上×${payLag}ヶ月分が未回収</div>
+        </div>
+      </div>
+      ${isLagRisk?`<div class="lag-warn">⚠️ 売上が増えるほど、一時的に現金が先に出ていく構造です。「黒字なのに現金が減る」の典型パターンです。<br>売上増加月は <b>${man(ms)}万円分の資金</b> が${payLag}ヶ月間手元に来ません。銀行への早めの相談・運転資金の確保をおすすめします。</div>`:''}
+      <div class="lag-note">※入金サイクルを改善する方法：請求書の早期発行・前払い交渉・ファクタリング（売掛債権の早期現金化）。実行前に税理士・金融機関に相談してください。</div>
+    </div>`;
+  }
+
+  document.getElementById('statusBar').innerHTML=`<div class="status-card ${sc}"><div class="s-icon">${si}</div><div class="s-label">${sl}</div><div class="s-months">${mo>=999?'黒字':mo}<span class="s-unit">${mo<999?'ヶ月':''}</span></div>${sdh}<div class="s-msg">${sm}</div></div>${lagHTML}`;
   const cfcls=mcf>=0?'plus':'minus';
   document.getElementById('mCashflow').className='m-val '+cfcls;
   document.getElementById('mCashflow').textContent=(mcf>=0?'+':'')+man(mcf)+'万';
@@ -660,7 +735,7 @@ function calculate(){
   acts.push({t:'この結果を印刷して税理士に持っていく',d:'「この設定に変えたい」という具体的な数字を持ち込むと相談がスムーズになります。'});
   document.getElementById('actionList').innerHTML=acts.map((a,i)=>`<li><div class="action-num">${i+1}</div><div class="action-body"><div class="a-title">${a.t}</div><div class="a-desc">${a.d}</div></div></li>`).join('');
 
-  window._cd={ncn,nco,df,bPm:pA.pm,cp,tN:now.tx,tO:pA.tx,sN:now.soc,sO:pA.soc,cN:now.ct,cO:pA.ct,mo,mcf,sk,b2Pm:pB?.pm??null,b2Net:pB?.net??null,mt,acts};
+  window._cd={ncn,nco,df,bPm:pA.pm,cp,tN:now.tx,tO:pA.tx,sN:now.soc,sO:pA.soc,cN:now.ct,cO:pA.ct,mo,mcf,sk,b2Pm:(pB?pB.pm:null),b2Net:(pB?pB.net:null),mt,acts};
   // 前回比較用にnco/ncnも保存
   savePrev({cb,ms,me,cp,ag,py,sp,sk,mt,pf,vs:(parseFloat(document.getElementById('vatSales').value)||0)*10000,vp:(parseFloat(document.getElementById('vatPurchase').value)||0)*10000,nco,ncn});
 
