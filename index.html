@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>社長の防衛線 — 資金ショートを防ぐ。今夜やるべき一手を出す。</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Zen+Kaku+Gothic+New:wght@700;900&display=swap');
+:root {
+  --ink:#1C1C2E;--ink2:#3D3D5C;--ink3:#6B6B8A;
+  --bg:#F7F6F2;--bg2:#FFFFFF;--bg3:#F0EEE8;
+  --sun:#E8845A;--sun2:#F5A57A;--sun3:#FDE8DC;
+  --teal:#2A8C8C;--teal2:#3AADAD;--teal3:#E0F4F4;
+  --amber:#D4831A;--amber3:#FEF3E2;
+  --red:#C0392B;--red3:#FDECEA;
+  --green:#2E7D52;--green3:#E8F5EE;
+  --border:#E2E0D8;
+  --shadow:0 2px 16px rgba(28,28,46,0.08);
+  --shadow2:0 4px 32px rgba(28,28,46,0.12);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--ink);font-family:'Noto Sans JP',sans-serif;font-size:15px;line-height:1.75;min-height:100vh;}
+.hero{background:linear-gradient(135deg,var(--ink) 0%,#2D2D4E 60%,#3D3D6E 100%);padding:36px 24px 32px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-40px;right:-40px;width:200px;height:200px;background:radial-gradient(circle,rgba(232,132,90,0.3) 0%,transparent 70%);pointer-events:none;}
+.hero::after{content:'';position:absolute;bottom:-20px;left:30%;width:160px;height:160px;background:radial-gradient(circle,rgba(42,140,140,0.2) 0%,transparent 70%);pointer-events:none;}
+.hero-inner{max-width:680px;margin:0 auto;position:relative;}
+.hero-tag{display:inline-block;background:var(--sun);color:#fff;font-size:11px;font-weight:700;letter-spacing:1.5px;padding:3px 10px;border-radius:20px;margin-bottom:12px;}
+.hero h1{font-family:'Zen Kaku Gothic New',sans-serif;font-size:clamp(22px,5vw,30px);font-weight:900;color:#fff;line-height:1.3;margin-bottom:10px;}
+.hero h1 em{color:var(--sun2);font-style:normal;}
+.hero p{font-size:13px;color:rgba(255,255,255,0.65);line-height:1.7;}
+#summaryBanner{display:none;position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:2px solid var(--teal);box-shadow:var(--shadow);}
+.ba-inner{max-width:680px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 16px;gap:6px;flex-wrap:wrap;}
+.ba-block{text-align:center;flex:1;min-width:70px;}
+.ba-label{font-size:10px;color:var(--ink3);font-weight:500;}
+.ba-val{font-family:'Zen Kaku Gothic New',sans-serif;font-size:18px;font-weight:900;line-height:1.2;}
+.ba-val.now{color:var(--ink3);}.ba-val.opt{color:var(--teal);}.ba-val.diff{color:var(--sun);}
+.ba-arrow{font-size:16px;color:var(--border);flex-shrink:0;}
+.wrap{max-width:680px;margin:0 auto;padding:24px 16px 80px;}
+.step-label{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.step-num{width:28px;height:28px;background:var(--sun);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;flex-shrink:0;}
+.step-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:16px;font-weight:900;color:var(--ink);}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:22px 20px;margin-bottom:16px;box-shadow:var(--shadow);}
+.card.sun-accent{border-top:3px solid var(--sun);}.card.teal-accent{border-top:3px solid var(--teal);}.card.amber-accent{border-top:3px solid var(--amber);}
+.field{margin-bottom:0;}
+.field label{display:block;font-size:13px;font-weight:700;color:var(--ink2);margin-bottom:6px;}
+.field .sub-label{font-size:11px;font-weight:400;color:var(--ink3);margin-left:4px;}
+.field input,.field select{width:100%;background:var(--bg3);border:1.5px solid var(--border);border-radius:10px;color:var(--ink);font-family:'Noto Sans JP',sans-serif;font-size:16px;padding:11px 14px;outline:none;transition:border 0.2s,background 0.2s;-webkit-appearance:none;appearance:none;}
+.field input:focus,.field select:focus{border-color:var(--teal);background:#fff;}
+.field input::placeholder{color:#B0AEA8;}
+.field .hint{font-size:11px;color:var(--ink3);margin-top:5px;line-height:1.5;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.f-gap{margin-top:12px;}
+.expand-toggle{width:100%;background:var(--bg3);border:1.5px dashed var(--border);border-radius:10px;padding:12px 16px;font-family:'Noto Sans JP',sans-serif;font-size:13px;color:var(--ink3);cursor:pointer;text-align:left;transition:all 0.2s;margin-bottom:16px;}
+.expand-toggle:hover{border-color:var(--teal);color:var(--teal);background:var(--teal3);}
+.expand-toggle::before{content:'▶ ';font-size:11px;}
+.expand-toggle.open::before{content:'▼ ';}
+.expand-body{display:none;}.expand-body.open{display:block;}
+.toggle-group{display:flex;gap:8px;flex-wrap:wrap;}
+.toggle-btn{padding:7px 14px;border-radius:20px;border:1.5px solid var(--border);background:var(--bg3);color:var(--ink3);font-size:13px;cursor:pointer;transition:all 0.15s;font-family:'Noto Sans JP',sans-serif;}
+.toggle-btn.active{background:var(--teal);border-color:var(--teal);color:#fff;font-weight:700;}
+.calc-btn{width:100%;background:linear-gradient(135deg,var(--sun) 0%,#D4632A 100%);color:#fff;border:none;border-radius:12px;padding:17px;font-family:'Zen Kaku Gothic New',sans-serif;font-size:18px;font-weight:900;letter-spacing:1px;cursor:pointer;transition:opacity 0.2s,transform 0.1s;margin-bottom:8px;box-shadow:0 4px 20px rgba(232,132,90,0.4);}
+.calc-btn:hover{opacity:0.92;}.calc-btn:active{transform:scale(0.98);}
+.calc-note{text-align:center;font-size:11px;color:var(--ink3);margin-bottom:24px;}
+#results{display:none;}
+.status-card{border-radius:16px;padding:22px 20px;margin-bottom:16px;text-align:center;}
+.status-card.s-red{background:linear-gradient(135deg,#FFF0EE,#FFE4DF);border:2px solid #F5A99A;}
+.status-card.s-yellow{background:linear-gradient(135deg,#FFFBF0,#FEF3E2);border:2px solid #F5D08A;}
+.status-card.s-green{background:linear-gradient(135deg,#F0FBF5,#E8F5EE);border:2px solid #8ACFAA;}
+.s-icon{font-size:36px;margin-bottom:6px;}
+.s-label{font-family:'Zen Kaku Gothic New',sans-serif;font-size:13px;font-weight:900;letter-spacing:1px;margin-bottom:4px;}
+.s-red .s-label{color:var(--red);}.s-yellow .s-label{color:var(--amber);}.s-green .s-label{color:var(--green);}
+.s-months{font-family:'Zen Kaku Gothic New',sans-serif;font-size:56px;font-weight:900;line-height:1;margin:4px 0;}
+.s-red .s-months{color:var(--red);}.s-yellow .s-months{color:var(--amber);}.s-green .s-months{color:var(--green);}
+.s-unit{font-size:18px;font-weight:700;}
+.s-date{font-size:13px;font-weight:700;margin-top:4px;padding:4px 12px;border-radius:20px;display:inline-block;}
+.s-red .s-date{background:#F5A99A;color:#7A1A10;}.s-yellow .s-date{background:#F5D08A;color:#7A5000;}.s-green .s-date{background:#8ACFAA;color:#0A4020;}
+.s-msg{font-size:13px;color:var(--ink2);margin-top:10px;line-height:1.6;}
+.metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.metric{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:14px 12px;text-align:center;box-shadow:var(--shadow);}
+.metric .m-label{font-size:11px;color:var(--ink3);font-weight:500;margin-bottom:4px;}
+.metric .m-val{font-family:'Zen Kaku Gothic New',sans-serif;font-size:24px;font-weight:900;}
+.metric .m-val.plus{color:var(--green);}.metric .m-val.minus{color:var(--red);}
+.metric .m-sub{font-size:10px;color:var(--ink3);margin-top:2px;}
+.cmp-wrap{overflow-x:auto;margin:12px 0;}
+.cmp-table{width:100%;border-collapse:collapse;font-size:13px;min-width:320px;}
+.cmp-table th{padding:9px 10px;text-align:center;font-size:11px;font-weight:700;border-bottom:2px solid var(--border);color:var(--ink3);}
+.cmp-table th.left{text-align:left;}.cmp-table th.th-opt{color:var(--teal);}.cmp-table th.th-life{color:var(--amber);}
+.cmp-table td{padding:9px 10px;border-bottom:1px solid var(--bg3);text-align:right;}
+.cmp-table td.label{text-align:left;color:var(--ink2);font-size:12px;font-weight:500;}
+.cmp-table .now{color:var(--ink3);}.cmp-table .opt{color:var(--teal);font-weight:700;}.cmp-table .life{color:var(--amber);font-weight:700;}
+.cmp-table tr.hl td{background:var(--teal3);}
+.cmp-table tr.hl .opt{color:var(--teal);font-size:15px;font-weight:900;}.cmp-table tr.hl .life{color:var(--amber);font-size:15px;font-weight:900;}
+.info-box,.warn-box,.danger-box,.hope-box{border-radius:10px;padding:12px 14px;font-size:12px;line-height:1.75;margin-top:10px;}
+.info-box{background:var(--teal3);border-left:4px solid var(--teal);color:var(--ink2);}
+.warn-box{background:var(--amber3);border-left:4px solid var(--amber);color:var(--ink2);}
+.danger-box{background:var(--red3);border-left:4px solid var(--red);color:var(--ink2);}
+.hope-box{background:var(--sun3);border-left:4px solid var(--sun);color:var(--ink2);}
+.info-box b{color:var(--teal);}.warn-box b{color:var(--amber);}.danger-box b{color:var(--red);}.hope-box b{color:var(--sun);}
+.r-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:15px;font-weight:900;color:var(--ink2);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.r-title::before{content:'';display:inline-block;width:4px;height:18px;background:var(--sun);border-radius:2px;flex-shrink:0;}
+.option-card{background:var(--bg3);border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:10px;}
+.o-tag{display:inline-block;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700;margin-bottom:6px;}
+.o-tag.best{background:var(--teal3);color:var(--teal);border:1px solid var(--teal2);}
+.o-tag.neutral{background:var(--bg3);color:var(--ink3);border:1px solid var(--border);}
+.option-card .o-label{font-size:11px;color:var(--ink3);margin-bottom:3px;}
+.option-card .o-val{font-family:'Zen Kaku Gothic New',sans-serif;font-size:20px;font-weight:900;color:var(--ink);}
+.option-card .o-val.better{color:var(--teal);}
+.option-card .o-desc{font-size:12px;color:var(--ink3);margin-top:6px;line-height:1.65;}
+.action-list{list-style:none;}
+.action-list li{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--bg3);}
+.action-list li:last-child{border-bottom:none;}
+.action-num{width:26px;height:26px;background:var(--sun);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;flex-shrink:0;margin-top:2px;}
+.action-body .a-title{font-weight:700;font-size:14px;color:var(--ink);}
+.action-body .a-desc{font-size:12px;color:var(--ink3);margin-top:2px;}
+.copy-btn{width:100%;background:var(--bg3);border:1.5px solid var(--border);color:var(--ink3);border-radius:10px;padding:13px;font-family:'Noto Sans JP',sans-serif;font-size:13px;cursor:pointer;transition:all 0.2s;margin-top:10px;text-align:center;}
+.copy-btn:hover{border-color:var(--teal);color:var(--teal);background:var(--teal3);}
+.copy-btn.copied{border-color:var(--teal);color:var(--teal);background:var(--teal3);}
+.disclaimer{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px 16px;font-size:11px;color:var(--ink3);line-height:1.7;margin-top:20px;}
+.promo{background:linear-gradient(135deg,var(--ink) 0%,#2D2D4E 100%);border-radius:16px;padding:20px;margin-top:16px;text-align:center;}
+.promo h3{font-family:'Zen Kaku Gothic New',sans-serif;font-size:14px;color:var(--sun2);margin-bottom:6px;font-weight:900;}
+.promo p{font-size:12px;color:rgba(255,255,255,0.6);line-height:1.7;}
+.force-warn{position:fixed;inset:0;background:rgba(28,28,46,0.7);z-index:999;display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px);}
+.force-warn-box{background:var(--bg2);border:2px solid var(--red);border-radius:16px;padding:28px 24px;max-width:460px;width:100%;box-shadow:var(--shadow2);}
+.force-warn-box h2{font-family:'Zen Kaku Gothic New',sans-serif;font-size:18px;color:var(--red);margin-bottom:12px;}
+.force-warn-box p{font-size:13px;color:var(--ink2);line-height:1.8;margin-bottom:16px;}
+.force-warn-box .fw-confirm{width:100%;background:var(--ink);border:none;color:#fff;padding:13px;border-radius:10px;font-family:'Noto Sans JP',sans-serif;font-size:14px;font-weight:700;cursor:pointer;}
+.sec-divider{text-align:center;color:var(--ink3);font-size:11px;font-weight:700;letter-spacing:2px;margin:24px 0 16px;display:flex;align-items:center;gap:10px;}
+.sec-divider::before,.sec-divider::after{content:'';flex:1;height:1px;background:var(--border);}
+.hero-sub{font-size:16px;color:rgba(255,255,255,0.85);font-weight:700;margin-bottom:14px;letter-spacing:0.5px;}
+.hero-voice{background:rgba(255,255,255,0.07);border-left:3px solid var(--sun2);border-radius:0 8px 8px 0;padding:12px 16px;margin-top:4px;}
+.hero-voice-text{font-size:13px;color:rgba(255,255,255,0.75);line-height:1.8;}
+.hero-voice-text b{color:var(--sun2);}
+.step-intro{font-size:13px;color:var(--ink3);line-height:1.7;margin-bottom:0;}
+.sanmo-msg{border-radius:14px;padding:18px 20px;margin-bottom:16px;position:relative;}
+.sanmo-msg.s-safe{background:linear-gradient(135deg,var(--teal3),#EBF8F8);border:1.5px solid var(--teal2);}
+.sanmo-msg.s-caution{background:linear-gradient(135deg,var(--amber3),#FEF8EC);border:1.5px solid #F5C860;}
+.sanmo-msg.s-danger{background:linear-gradient(135deg,var(--sun3),#FDEEE8);border:1.5px solid var(--sun2);}
+.sanmo-msg.s-critical{background:linear-gradient(135deg,var(--red3),#FDECEA);border:1.5px solid #F5A99A;}
+.sanmo-icon{font-size:28px;margin-bottom:8px;}
+.sanmo-headline{font-family:'Zen Kaku Gothic New',sans-serif;font-size:18px;font-weight:900;line-height:1.3;margin-bottom:8px;}
+.sanmo-msg.s-safe .sanmo-headline{color:var(--teal);}
+.sanmo-msg.s-caution .sanmo-headline{color:var(--amber);}
+.sanmo-msg.s-danger .sanmo-headline{color:var(--sun);}
+.sanmo-msg.s-critical .sanmo-headline{color:var(--red);}
+.sanmo-body{font-size:13px;color:var(--ink2);line-height:1.8;}
+.sanmo-body b{color:var(--ink);}
+.sanmo-next{display:inline-block;margin-top:12px;font-size:12px;font-weight:700;color:var(--ink3);background:rgba(255,255,255,0.6);padding:5px 12px;border-radius:20px;}
+/* 今夜の一手 */
+.tonight-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.tonight-badge{background:var(--sun);color:#fff;font-size:11px;font-weight:900;letter-spacing:1px;padding:3px 10px;border-radius:20px;flex-shrink:0;}
+.tonight-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:15px;font-weight:900;color:var(--ink);}
+.tonight-action{background:var(--bg3);border-radius:12px;padding:14px 16px;margin-bottom:12px;}
+.tonight-action .ta-label{font-size:11px;color:var(--ink3);margin-bottom:4px;}
+.tonight-action .ta-main{font-family:'Zen Kaku Gothic New',sans-serif;font-size:17px;font-weight:900;color:var(--sun);line-height:1.3;}
+.tonight-action .ta-effect{font-size:13px;font-weight:700;color:var(--teal);margin-top:6px;}
+.tonight-action .ta-why{font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.6;}
+.tonight-legal{font-size:11px;color:var(--ink3);border-top:1px solid var(--border);padding-top:10px;margin-top:10px;line-height:1.6;}
+/* かんたん推計モード */
+.easy-result{background:var(--teal3);border:1.5px solid var(--teal2);border-radius:10px;padding:12px 14px;margin-top:10px;}
+.easy-result .er-label{font-size:11px;color:var(--teal);font-weight:700;margin-bottom:4px;}
+.easy-result .er-val{font-family:'Zen Kaku Gothic New',sans-serif;font-size:20px;font-weight:900;color:var(--teal);}
+.easy-result .er-note{font-size:11px;color:var(--ink3);margin-top:4px;}
+#salesPresetGroup .toggle-btn{font-size:12px;padding:6px 10px;}
+#marginGroup .toggle-btn{font-size:12px;padding:8px 10px;text-align:center;line-height:1.3;}
+/* やめていいことリスト */
+.stop-item{display:flex;justify-content:space-between;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--bg3);}
+.stop-item:last-child{border-bottom:none;}
+.stop-left .s-name{font-size:13px;font-weight:700;color:var(--ink);}
+.stop-left .s-desc{font-size:11px;color:var(--ink3);margin-top:2px;}
+.stop-right{text-align:right;flex-shrink:0;margin-left:12px;}
+.stop-right .s-amount{font-family:'Zen Kaku Gothic New',sans-serif;font-size:15px;font-weight:900;color:var(--red);}
+.stop-right .s-unit{font-size:10px;color:var(--ink3);}
+.stop-total{background:var(--red3);border-radius:8px;padding:10px 14px;margin-top:10px;display:flex;justify-content:space-between;align-items:center;}
+.stop-total .st-label{font-size:12px;font-weight:700;color:var(--red);}
+.stop-total .st-val{font-family:'Zen Kaku Gothic New',sans-serif;font-size:18px;font-weight:900;color:var(--red);}
+.stop-note{font-size:11px;color:var(--ink3);margin-top:8px;line-height:1.6;}
+/* 相談文タブ */
+.script-tab{padding:7px 14px;border-radius:20px;border:1.5px solid var(--border);background:var(--bg3);color:var(--ink3);font-size:13px;cursor:pointer;font-family:'Noto Sans JP',sans-serif;transition:all 0.15s;}
+.script-tab.active{background:var(--teal);border-color:var(--teal);color:#fff;font-weight:700;}
+.script-box{background:var(--bg3);border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;font-size:13px;color:var(--ink2);line-height:1.85;white-space:pre-wrap;word-break:break-all;margin-bottom:10px;}
+.script-to{font-size:11px;color:var(--ink3);margin-bottom:8px;}
+/* 低報酬説明パネル */
+.lowpay-panel{background:var(--sun3);border:1.5px solid var(--sun2);border-radius:12px;padding:14px 16px;margin-top:10px;}
+.lowpay-panel .lp-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:14px;font-weight:900;color:var(--sun);margin-bottom:8px;}
+.lowpay-panel .lp-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(232,132,90,0.2);font-size:12px;}
+.lowpay-panel .lp-row:last-child{border-bottom:none;}
+.lowpay-panel .lp-item{color:var(--ink2);}
+.lowpay-panel .lp-val{font-weight:700;color:var(--ink);}
+.lowpay-panel .lp-note{font-size:11px;color:var(--ink3);margin-top:8px;line-height:1.6;}
+/* 前回比較 */
+.prev-card{background:var(--bg3);border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;margin-top:10px;}
+.prev-card .pc-title{font-size:12px;font-weight:700;color:var(--ink3);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.prev-card .pc-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center;}
+.prev-card .pc-col .pc-label{font-size:10px;color:var(--ink3);}
+.prev-card .pc-col .pc-val{font-family:'Zen Kaku Gothic New',sans-serif;font-size:16px;font-weight:900;}
+.prev-card .pc-col.pc-old .pc-val{color:var(--ink3);}
+.prev-card .pc-col.pc-new .pc-val{color:var(--teal);}
+.prev-card .pc-col.pc-diff .pc-val{color:var(--sun);}
+.prev-card .pc-col.pc-diff .pc-val.neg{color:var(--red);}
+.prev-card .pc-date{font-size:10px;color:var(--ink3);margin-top:8px;text-align:right;}
+/* prev badge on header */
+.prev-badge{background:var(--teal3);border:1px solid var(--teal2);border-radius:8px;padding:4px 10px;font-size:11px;color:var(--teal);font-weight:700;margin-top:6px;display:inline-block;}
+@media(max-width:480px){.field-row{grid-template-columns:1fr;}.s-months{font-size:44px;}.prev-card .pc-grid{grid-template-columns:1fr 1fr 1fr;}}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">無料・法人社長向け</div>
+    <h1>社長の<em>防衛線</em></h1>
+    <p style="font-size:14px;color:rgba(255,255,255,0.75);margin-top:8px;line-height:1.6">資金ショートを防ぐ。今夜やるべき一手を出す。<br><span style="font-size:12px;color:rgba(255,255,255,0.45)">無料・法人社長向け・税務アドバイスではありません</span></p>
+  </div>
+</div>
+
+<div id="summaryBanner">
+  <div class="ba-inner">
+    <div class="ba-block"><div class="ba-label">現在の手残り（年）</div><div class="ba-val now" id="baNow">—</div></div>
+    <div class="ba-arrow">→</div>
+    <div class="ba-block"><div class="ba-label">最適化後（年）</div><div class="ba-val opt" id="baOpt">—</div></div>
+    <div class="ba-arrow">=</div>
+    <div class="ba-block"><div class="ba-label">年間の差額</div><div class="ba-val diff" id="baDiff">—</div></div>
+  </div>
+</div>
+
+<div class="force-warn" id="forceWarn" style="display:none">
+  <div class="force-warn-box">
+    <h2 id="fwTitle">⚠️ 確認してください</h2>
+    <p id="fwBody"></p>
+    <button class="fw-confirm" onclick="closeForceWarn()">内容を理解した上で続ける</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="card sun-accent">
+    <div class="step-label"><div class="step-num">1</div><div class="step-title">今日の状態を教えてください</div></div>
+    <p class="step-intro">ざっくりでOKです。「正確な数字でないといけない」と身構えないでください。まず現状を把握することが先です。</p>
+    <div class="field" style="margin-top:14px">
+      <label>今の口座残高（全口座合計） <span class="sub-label">（万円）</span></label>
+      <input type="number" id="cashBalance" placeholder="例：300" min="0" inputmode="numeric">
+      <div class="hint">ネットバンクで確認できる合計額でOK。ざっくりでいいです</div>
+    </div>
+    <div class="field-row f-gap">
+      <div class="field">
+        <label>今月の売上見込み <span class="sub-label">（万円）</span></label>
+        <input type="number" id="monthlySales" placeholder="例：200" min="0" inputmode="numeric">
+        <div class="hint">先月の実績でもOK</div>
+      </div>
+      <div class="field">
+        <label>今月の出費合計 <span class="sub-label">（万円）</span></label>
+        <input type="number" id="monthlyExpense" placeholder="例：220" min="0" inputmode="numeric">
+        <div class="hint">給与・仕入・家賃・借入返済すべて込み</div>
+      </div>
+    </div>
+    <div class="field f-gap">
+      <label>最低限ほしい月の手取り <span class="sub-label">（万円）</span><span class="hint" style="display:inline;margin-left:6px">任意・未入力なら手残り最大を優先</span></label>
+      <input type="number" id="minTakeHomeM" placeholder="例：25（生活できるギリギリの額でOK）" min="0" inputmode="numeric">
+      <div class="hint">この金額を下回らない範囲で最適化します。「25万は欲しい」など生活実感の数字でOKです</div>
+    </div>
+    <div id="lowPayExplain" style="display:none"></div>
+  </div>
+
+  <div class="card teal-accent">
+    <div class="step-label"><div class="step-num">2</div><div class="step-title">社長の報酬と会社の利益</div></div>
+    <div class="field-row">
+      <div class="field">
+        <label>社長の月額報酬 <span class="sub-label">（万円）</span></label>
+        <input type="number" id="currentPayM" placeholder="例：40" min="0" inputmode="numeric">
+      </div>
+      <div class="field">
+        <label>社長の年齢</label>
+        <input type="number" id="age" placeholder="例：45" min="20" max="75" inputmode="numeric">
+      </div>
+    </div>
+
+    <!-- かんたんモード切替 -->
+    <div class="field f-gap">
+      <label>会社の年間利益の入力方法</label>
+      <div class="toggle-group" id="profitModeGroup">
+        <button class="toggle-btn active" data-mode="easy" onclick="switchProfitMode(this,'easy')">💡 かんたん（感覚で入力）</button>
+        <button class="toggle-btn" data-mode="exact" onclick="switchProfitMode(this,'exact')">数字で入力</button>
+      </div>
+    </div>
+
+    <!-- かんたんモード -->
+    <div id="easyProfitBlock" class="f-gap">
+      <div class="field">
+        <label>月の売上（ざっくり） <span class="sub-label">（万円）</span></label>
+        <div class="toggle-group" id="salesPresetGroup" style="flex-wrap:wrap">
+          <button class="toggle-btn" data-val="100" onclick="selectSalesPreset(this)">100万</button>
+          <button class="toggle-btn" data-val="200" onclick="selectSalesPreset(this)">200万</button>
+          <button class="toggle-btn" data-val="300" onclick="selectSalesPreset(this)">300万</button>
+          <button class="toggle-btn" data-val="500" onclick="selectSalesPreset(this)">500万</button>
+          <button class="toggle-btn" data-val="800" onclick="selectSalesPreset(this)">800万</button>
+          <button class="toggle-btn" data-val="1000" onclick="selectSalesPreset(this)">1000万</button>
+        </div>
+        <input type="number" id="salesPresetCustom" placeholder="上にない場合はここに入力（万円）" min="0" inputmode="numeric" style="margin-top:8px" oninput="updateEasyProfit()">
+      </div>
+      <div class="field f-gap">
+        <label>売上のうち、どれくらい手元に残りますか？<span class="sub-label">（感覚でOK）</span></label>
+        <div class="toggle-group" id="marginGroup" style="flex-wrap:wrap">
+          <button class="toggle-btn" data-val="0.03" onclick="selectToggle(this,'marginGroup');updateEasyProfit()">ほぼ残らない<br><span style="font-size:10px">〜5%</span></button>
+          <button class="toggle-btn" data-val="0.10" onclick="selectToggle(this,'marginGroup');updateEasyProfit()">少し残る<br><span style="font-size:10px">10%くらい</span></button>
+          <button class="toggle-btn active" data-val="0.20" onclick="selectToggle(this,'marginGroup');updateEasyProfit()">普通<br><span style="font-size:10px">20%くらい</span></button>
+          <button class="toggle-btn" data-val="0.30" onclick="selectToggle(this,'marginGroup');updateEasyProfit()">そこそこ<br><span style="font-size:10px">30%くらい</span></button>
+          <button class="toggle-btn" data-val="0.40" onclick="selectToggle(this,'marginGroup');updateEasyProfit()">よく残る<br><span style="font-size:10px">40%以上</span></button>
+        </div>
+      </div>
+      <div id="easyProfitResult" class="easy-result" style="display:none"></div>
+    </div>
+
+    <!-- 数字で入力モード -->
+    <div id="exactProfitBlock" class="field f-gap" style="display:none">
+      <label>会社の年間利益 <span class="sub-label">（役員報酬を引く前・万円）</span></label>
+      <input type="number" id="profitY" placeholder="例：600" min="0" inputmode="numeric">
+      <div class="hint">試算表の「営業利益＋役員報酬」でも確認できます</div>
+    </div>
+    <!-- かんたんモード用の隠しフィールド -->
+    <input type="hidden" id="profitYEasy" value="0">
+  </div>
+
+  <button class="expand-toggle" id="expandToggle" onclick="toggleExpand()">もっと詳しく計算する（配偶者報酬・借入金・消費税・自宅家賃など）</button>
+
+  <div class="expand-body" id="expandBody">
+    <div class="card amber-accent">
+      <div class="step-label"><div class="step-num">+</div><div class="step-title">追加情報（任意）</div></div>
+      <div class="field"><label>配偶者への役員報酬 <span class="sub-label">（月額・万円、なければ0）</span></label><input type="number" id="spousePayM" placeholder="例：10" min="0" inputmode="numeric"></div>
+      <div class="field f-gap">
+        <label>役員借入金の残高 <span class="sub-label">（万円、なければ0）</span></label>
+        <input type="number" id="shakkinBalance" placeholder="例：500" min="0" inputmode="numeric">
+        <div class="hint">社長が過去に会社に貸したお金。決算書の「短期借入金（役員）」で確認できます</div>
+      </div>
+      <div class="field f-gap">
+        <label>都道府県</label>
+        <select id="prefecture">
+          <option value="Tokyo">東京都</option><option value="Kanagawa">神奈川県</option>
+          <option value="Osaka">大阪府</option><option value="Aichi">愛知県</option>
+          <option value="Saitama">埼玉県</option><option value="Chiba">千葉県</option>
+          <option value="Hokkaido">北海道</option><option value="Fukuoka">福岡県</option>
+          <option value="other">その他</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="step-label"><div class="step-num">+</div><div class="step-title">消費税の確認</div></div>
+      <div class="field-row">
+        <div class="field"><label>年間売上 <span class="sub-label">（万円）</span></label><input type="number" id="vatSales" placeholder="例：2000" min="0" inputmode="numeric"></div>
+        <div class="field"><label>年間仕入・経費 <span class="sub-label">（万円）</span></label><input type="number" id="vatPurchase" placeholder="例：1500" min="0" inputmode="numeric"></div>
+      </div>
+      <div class="field f-gap">
+        <label>業種</label>
+        <div class="toggle-group" id="industryGroup">
+          <button class="toggle-btn active" data-val="0.50" onclick="selectToggle(this,'industryGroup')">IT・コンサル</button>
+          <button class="toggle-btn" data-val="0.60" onclick="selectToggle(this,'industryGroup')">建設・飲食</button>
+          <button class="toggle-btn" data-val="0.70" onclick="selectToggle(this,'industryGroup')">農業・卸</button>
+          <button class="toggle-btn" data-val="0.80" onclick="selectToggle(this,'industryGroup')">小売</button>
+        </div>
+        <div class="hint" style="margin-top:6px">簡易課税のみなし仕入率の目安</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="step-label"><div class="step-num">+</div><div class="step-title">自宅の事務所利用</div></div>
+      <div class="field">
+        <label>自宅を事務所として使用していますか？</label>
+        <div class="toggle-group" id="homeOfficeGroup">
+          <button class="toggle-btn active" data-val="0" onclick="selectToggle(this,'homeOfficeGroup')">していない</button>
+          <button class="toggle-btn" data-val="30" onclick="selectToggle(this,'homeOfficeGroup')">一部（約30%）</button>
+          <button class="toggle-btn" data-val="50" onclick="selectToggle(this,'homeOfficeGroup')">半分程度（約50%）</button>
+        </div>
+      </div>
+      <div class="field f-gap" id="rentField" style="display:none">
+        <label>自宅の月額家賃（または住宅ローン返済額） <span class="sub-label">（万円）</span></label>
+        <input type="number" id="homeRent" placeholder="例：12" min="0" inputmode="numeric">
+      </div>
+    </div>
+  </div>
+
+  <button class="calc-btn" onclick="calculate()">今の状況を確認する →</button>
+  <p class="calc-note">※計算結果は参考値です。税務アドバイスではありません。最終判断は必ず税理士へ。</p>
+
+  <div id="results">
+    <div class="sec-divider">診断結果</div>
+
+    <!-- 案A: 今夜の一手（最上部・最優先） -->
+    <div id="tonightCard" class="card" style="border:2px solid var(--sun);display:none">
+      <div id="tonightContent"></div>
+    </div>
+
+    <!-- 案D: やめていいことリスト -->
+    <div id="stopCard" class="card" style="display:none">
+      <div class="r-title">今すぐやめると楽になる可能性がある項目</div>
+      <div id="stopContent"></div>
+    </div>
+
+    <div class="card">
+      <div class="r-title">資金の状態</div>
+      <div id="statusBar"></div>
+      <div class="metrics">
+        <div class="metric"><div class="m-label">月間収支</div><div class="m-val" id="mCashflow">—</div><div class="m-sub">売上 − 支出</div></div>
+        <div class="metric"><div class="m-label">資金余命</div><div class="m-val" id="mMonths">—</div><div class="m-sub">ヶ月</div></div>
+      </div>
+      <div id="cashWarn"></div>
+    </div>
+
+    <div class="card">
+      <div class="r-title">役員報酬の最適化</div>
+      <div id="planBadges" style="display:none"></div>
+      <div class="cmp-wrap">
+        <table class="cmp-table">
+          <thead><tr>
+            <th class="left">項目</th>
+            <th>現在</th>
+            <th class="th-opt" id="thPlanA">手残り最大</th>
+            <th class="th-life" id="thPlanB" style="display:none">生活優先</th>
+          </tr></thead>
+          <tbody id="compTable"></tbody>
+        </table>
+      </div>
+      <div id="shakkinSection"></div>
+      <div id="altSection"></div>
+      <div id="payWarn"></div>
+      <div id="prevCompare" style="display:none"></div>
+    </div>
+
+    <div class="card" id="vatCard" style="display:none">
+      <div class="r-title">消費税の選択肢</div>
+      <div id="vatSection"></div>
+    </div>
+
+    <div class="card" id="rentSection" style="display:none">
+      <div class="r-title">自宅家賃の法人経費化</div>
+      <div id="rentContent"></div>
+    </div>
+
+    <div class="card sun-accent">
+      <div class="r-title">今日やること</div>
+      <ul class="action-list" id="actionList"></ul>
+    </div>
+
+    <!-- 案C: 相談文生成 -->
+    <div class="card" id="scriptCard">
+      <div class="r-title">専門家への相談文（コピーして送るだけ）</div>
+      <div id="scriptTabs" style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap"></div>
+      <div id="scriptContent"></div>
+      <button class="copy-btn" id="scriptCopyBtn" onclick="copyScript()">📋 この文章をコピーする</button>
+    </div>
+
+    <div class="card" style="background:var(--bg3);border:none;box-shadow:none">
+      <button class="copy-btn" id="copyBtn" onclick="copyResult()">📊 計算結果の全データをコピーする（税理士への資料用）</button>
+    </div>
+
+    <div class="disclaimer">
+      📋 <b>免責事項：</b>本ツールは一般的な税制・社会保険料の計算式に基づく<b>参考シミュレーション</b>です。個人の状況により結果は大きく異なります。税務申告・役員報酬変更・消費税届出等の最終判断は、必ず税理士等の有資格者にご依頼ください。本資料はいかなる税務アドバイスも構成しません。
+    </div>
+
+
+  </div>
+</div>
+
+<script>
+// ── LocalStorage: 前回データ保存・読込 ──
+const LS_KEY='shacho_prev_v1';
+function savePrev(data){try{localStorage.setItem(LS_KEY,JSON.stringify({...data,savedAt:new Date().toISOString()}));}catch(e){}}
+function loadPrev(){try{const d=localStorage.getItem(LS_KEY);return d?JSON.parse(d):null;}catch(e){return null;}}
+
+// ── 前回入力を復元してフォームに流し込む ──
+function restorePrevInputs(){
+  const p=loadPrev();
+  if(!p)return;
+  const fields={cashBalance:p.cb,monthlySales:p.ms,monthlyExpense:p.me,currentPayM:p.cp,age:p.ag,profitY:p.py,minTakeHomeM:p.mt,spousePayM:p.sp,shakkinBalance:p.sk,vatSales:p.vs,vatPurchase:p.vp};
+  Object.entries(fields).forEach(([id,val])=>{const el=document.getElementById(id);if(el&&val!=null&&val!==0)el.value=val/10000;});
+  if(p.pf){const pf=document.getElementById('prefecture');if(pf)pf.value=p.pf;}
+  // 前回データ存在バナーを表示
+  const hero=document.querySelector('.hero-inner');
+  if(hero&&p.savedAt){
+    const d=new Date(p.savedAt);
+    const ds=`${d.getMonth()+1}月${d.getDate()}日`;
+    hero.insertAdjacentHTML('beforeend',`<div class="prev-badge">📅 ${ds}の入力データを復元しました — 変更があれば上書きしてください</div>`);
+  }
+}
+window.addEventListener('DOMContentLoaded',restorePrevInputs);
+
+function selectToggle(btn,gid){document.querySelectorAll('#'+gid+' .toggle-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');if(gid==='homeOfficeGroup'){document.getElementById('rentField').style.display=btn.dataset.val==='0'?'none':'block';}}
+function toggleExpand(){const b=document.getElementById('expandBody'),t=document.getElementById('expandToggle');const o=b.classList.toggle('open');t.classList.toggle('open',o);}
+
+// ── かんたん推計モード ──
+function switchProfitMode(btn,mode){
+  document.querySelectorAll('#profitModeGroup .toggle-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('easyProfitBlock').style.display=mode==='easy'?'block':'none';
+  document.getElementById('exactProfitBlock').style.display=mode==='exact'?'block':'none';
+  if(mode==='easy')updateEasyProfit();
+}
+
+function selectSalesPreset(btn){
+  document.querySelectorAll('#salesPresetGroup .toggle-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('salesPresetCustom').value='';
+  updateEasyProfit();
+}
+
+function updateEasyProfit(){
+  // 売上取得
+  const presetBtn=document.querySelector('#salesPresetGroup .toggle-btn.active');
+  const customVal=parseFloat(document.getElementById('salesPresetCustom').value)||0;
+  const salesM=customVal>0?customVal:(presetBtn?parseFloat(presetBtn.dataset.val):0);
+  if(salesM<=0){document.getElementById('easyProfitResult').style.display='none';return;}
+
+  // 利益率取得
+  const marginBtn=document.querySelector('#marginGroup .toggle-btn.active');
+  const margin=marginBtn?parseFloat(marginBtn.dataset.val):0.20;
+
+  // 年間利益計算（報酬控除前 = 売上 × 利益率 × 12 + 役員報酬）
+  // 役員報酬は「利益控除後の残り」として扱うため、ここでは売上×利益率×12がそのまま利益（役員報酬控除前）の近似
+  // より正確には: 年間利益(報酬前) = 月売上×12×利益率 + 報酬年額
+  const payM=(parseFloat(document.getElementById('currentPayM').value)||0);
+  const profitEst=Math.round((salesM*12*margin+payM*12)/10000)*10000*100; // 万円×100 = 円換算
+  // 実際は万円で保存
+  const profitEstMan=Math.round(salesM*12*margin+payM*12);
+  document.getElementById('profitYEasy').value=profitEstMan;
+
+  const el=document.getElementById('easyProfitResult');
+  el.style.display='block';
+  el.innerHTML=`<div class="er-label">年間利益（役員報酬控除前）の推計値</div>
+    <div class="er-val">約 ${profitEstMan.toLocaleString('ja-JP')} 万円</div>
+    <div class="er-note">月売上 ${salesM}万円 × 12ヶ月 × 利益率${Math.round(margin*100)}% + 報酬年額 = 推計値です。<br>正確でなくても大丈夫です。後から修正できます。</div>`;
+}
+const SB=[[0,63000,58000],[63000,73000,68000],[73000,83000,78000],[83000,93000,88000],[93000,101000,98000],[101000,107000,104000],[107000,114000,110000],[114000,122000,118000],[122000,130000,126000],[130000,138000,134000],[138000,146000,142000],[146000,155000,150000],[155000,165000,160000],[165000,175000,170000],[175000,185000,180000],[185000,195000,190000],[195000,210000,200000],[210000,230000,220000],[230000,250000,240000],[250000,270000,260000],[270000,290000,280000],[290000,310000,300000],[310000,330000,320000],[330000,350000,340000],[350000,370000,360000],[370000,395000,380000],[395000,425000,410000],[425000,455000,440000],[455000,485000,470000],[485000,515000,500000],[515000,545000,530000],[545000,575000,560000],[575000,605000,590000],[605000,635000,620000],[635000,665000,650000],[665000,695000,680000],[695000,730000,710000],[730000,770000,750000],[770000,810000,790000],[810000,855000,830000],[855000,905000,880000],[905000,955000,930000],[955000,1005000,980000],[1005000,1055000,1030000],[1055000,1115000,1090000],[1115000,1175000,1150000],[1175000,1235000,1210000],[1235000,1295000,1270000],[1295000,1355000,1330000],[1355000,Infinity,1390000]];
+const HR={Tokyo:0.0998,Kanagawa:0.1000,Osaka:0.1021,Aichi:0.0987,Saitama:0.1000,Chiba:0.1000,Hokkaido:0.1031,Fukuoka:0.1035,other:0.1000};
+function gH(m){const b=SB.find(b=>m>=b[0]&&m<b[1])||SB[SB.length-1];return Math.max(58000,b[2]);}
+function gP(m){const b=SB.find(b=>m>=b[0]&&m<b[1])||SB[SB.length-1];return Math.max(88000,b[2]);}
+function cSoc(y,age,pref){if(y<=0)return 0;const m=y/12,hR=(HR[pref]||0.1000)+(age>=40&&age<75?0.016:0),h=gH(m)*hR,p=age<70?gP(m)*0.183:0;return Math.round((h+p)*12);}
+function sDed(g){if(g<=1625000)return 650000;if(g<=1800000)return g*0.4;if(g<=3600000)return g*0.3+180000;if(g<=6600000)return g*0.2+540000;if(g<=8500000)return g*0.1+1200000;return 2050000;}
+function cTax(inc,soc,od=0){const basic=inc<=23500000?580000:0;const t=Math.max(0,Math.floor((inc-soc-basic-od)/1000)*1000);let it=0;if(t<=1950000)it=t*0.05;else if(t<=3300000)it=t*0.10-97500;else if(t<=6950000)it=t*0.20-427500;else if(t<=9000000)it=t*0.23-636000;else if(t<=18000000)it=t*0.33-1536000;else if(t<=40000000)it=t*0.40-2796000;else it=t*0.45-4796000;it=Math.round(it*1.021/100)*100;const rt=inc>450000?6000+Math.round(t*0.10/100)*100:0;return it+rt;}
+function cCorp(p){if(p<=0)return 70000;const r=Math.floor(p/1000)*1000;return Math.round((r<=8000000?r*0.235:8000000*0.235+(r-8000000)*0.336)/100)*100+70000;}
+function man(y){return Math.round(y/10000).toLocaleString('ja-JP');}
+function mS(y){return man(y)+'万円';}
+
+function calculate(){
+  const cb=(parseFloat(document.getElementById('cashBalance').value)||0)*10000;
+  const ms=(parseFloat(document.getElementById('monthlySales').value)||0)*10000;
+  const me=(parseFloat(document.getElementById('monthlyExpense').value)||0)*10000;
+  const cp=(parseFloat(document.getElementById('currentPayM').value)||0)*10000;
+  const ag=parseInt(document.getElementById('age').value)||45;
+  // 報酬0円チェック
+  if(cp===0){
+    alert('役員報酬を入力してください。
+（例：月30万円の場合は「30」と入力）');
+    document.getElementById('currentPayM').focus();
+    return;
+  }
+  // かんたんモードか数字入力モードかを判断
+  const isEasyMode=document.querySelector('#profitModeGroup .toggle-btn.active')?.dataset.mode==='easy';
+  const pyRaw=isEasyMode
+    ?(parseFloat(document.getElementById('profitYEasy').value)||0)
+    :(parseFloat(document.getElementById('profitY').value)||0);
+  const py=pyRaw*10000;
+  const sp=(parseFloat(document.getElementById('spousePayM').value)||0)*10000;
+  const sk=(parseFloat(document.getElementById('shakkinBalance').value)||0)*10000;
+  const mt=(parseFloat(document.getElementById('minTakeHomeM').value)||0)*10000;
+  const pf=document.getElementById('prefecture').value;
+
+  // 前回データ読込（比較用）
+  const prevData=loadPrev();
+
+  // 今回データを保存
+  savePrev({cb,ms,me,cp,ag,py,sp,sk,mt,pf,vs:(parseFloat(document.getElementById('vatSales').value)||0)*10000,vp:(parseFloat(document.getElementById('vatPurchase').value)||0)*10000});
+  const vs=(parseFloat(document.getElementById('vatSales').value)||0)*10000;
+  const vp=(parseFloat(document.getElementById('vatPurchase').value)||0)*10000;
+  const dr=parseFloat(document.querySelector('#industryGroup .toggle-btn.active').dataset.val);
+  const hp=parseFloat(document.querySelector('#homeOfficeGroup .toggle-btn.active').dataset.val)/100;
+  const hr=(parseFloat(document.getElementById('homeRent')?.value)||0)*10000;
+  const spY=sp*12;
+
+  // ① 資金ショート
+  const mcf=ms-me;
+  let mo=mcf>=0?999:(cb>0?Math.floor(cb/(-mcf)):0);
+  let sc,si,sl,sm,sdh='';
+  if(mcf>=0){sc='s-green';si='✅';sl='黒字経営';sm='今すぐ資金ショートの危険はありません。手残りをさらに最大化していきましょう。';}
+  else if(mo<=1){sc='s-red';si='🚨';sl='危険水域';sm='今月中に銀行・税理士へ緊急相談を。先手の相談ほど選択肢が増えます。';}
+  else if(mo<=3){sc='s-yellow';si='⚠️';sl='要注意';sm='3ヶ月以内に手が打てないと危険です。役員報酬の見直しと資金繰り表の整備を急いでください。';}
+  else{sc='s-green';si='🟢';sl='まだ余裕あり';sm='今すぐの危機ではありませんが、節税・報酬最適化の施策を今から仕込んでおくことをおすすめします。';}
+  if(mcf<0&&mo<999){const d=new Date(),td=new Date(d.getFullYear(),d.getMonth()+mo,1);sdh=`<div class="s-date">${td.getFullYear()}年${td.getMonth()+1}月に要注意</div>`;}
+  document.getElementById('statusBar').innerHTML=`<div class="status-card ${sc}"><div class="s-icon">${si}</div><div class="s-label">${sl}</div><div class="s-months">${mo>=999?'黒字':mo}<span class="s-unit">${mo<999?'ヶ月':''}</span></div>${sdh}<div class="s-msg">${sm}</div></div>`;
+  const cfcls=mcf>=0?'plus':'minus';
+  document.getElementById('mCashflow').className='m-val '+cfcls;
+  document.getElementById('mCashflow').textContent=(mcf>=0?'+':'')+man(mcf)+'万';
+  document.getElementById('mMonths').textContent=mo>=999?'∞':mo;
+  let cwH='';
+  if(mo<=3&&mcf<0)cwH=`<div class="danger-box"><b>⚠️ 支払いの優先順位（資金が逼迫している場合）</b><br>① 従業員への人件費　② 社会保険料（未納は追徴リスク大）　③ 銀行返済（事前相談で猶予交渉可）　④ 税金（延納・分割納付の相談余地あり）<br><br>「全部は払えない」状況になる前に、必ず銀行・税務署・税理士へ先手で相談してください。先手ほど選択肢が広がります。</div>`;
+  document.getElementById('cashWarn').innerHTML=cwH;
+
+  // ② 役員報酬最適化
+  function pl(pm){const y=pm*12,soc=cSoc(y,ag,pf),emp=Math.round(soc/2),inc=Math.max(0,y-sDed(y)),tx=cTax(inc,emp),take=y-tx-emp,cpr=Math.max(0,py-y-spY-(soc-emp)),ct=cCorp(cpr),net=py-tx-soc-ct;return{pm,y,soc,emp,tx,ct,net,take};}
+  const now=pl(cp);
+  const cs=[];for(let p=80000;p<=cp;p+=10000)cs.push(p);
+  [88000,98000,104000,110000,118000,126000,134000,142000,150000,160000,170000,180000,190000,200000,220000,240000,260000,280000,300000,320000,340000,360000,380000].forEach(v=>{if(v<=cp)cs.push(v);});
+  const uc=[...new Set(cs)].sort((a,b)=>a-b);
+  let pA=pl(cp);for(const p of uc){const q=pl(p);if(q.net>pA.net)pA=q;}
+  let pB=null;
+  if(mt>0){const vi=uc.map(p=>pl(p)).filter(p=>p.take>=mt*12);pB=vi.length>0?vi.reduce((b,p)=>p.net>b.net?p:b,vi[0]):pl(cp);}
+  const ncn=now.net,nco=pA.net,df=nco-ncn;
+  document.getElementById('thPlanB').style.display=pB?'':'none';
+  document.getElementById('thPlanA').textContent=pB?'手残り最大プラン':'最適化後（試算）';
+  if(pB)document.getElementById('thPlanB').textContent=`生活優先（月${man(mt)}万以上）`;
+  const tdN=v=>`<td class="now">${v}</td>`,tdA=v=>`<td class="opt">${v}</td>`,tdB=v=>pB?`<td class="life">${v}</td>`:'';
+  const rows=[['社長の月額報酬',mS(cp),mS(pA.pm),pB?mS(pB.pm):''],['個人の税金（所得税＋住民税）',mS(now.tx),mS(pA.tx),pB?mS(pB.tx):''],['社会保険料（労使合計）',mS(now.soc),mS(pA.soc),pB?mS(pB.soc):''],['法人税・均等割',mS(now.ct),mS(pA.ct),pB?mS(pB.ct):''],['社長の月手取り（概算）',mS(Math.round(now.take/12)),mS(Math.round(pA.take/12)),pB?mS(Math.round(pB.take/12)):'']];
+  let th=rows.map(r=>`<tr><td class="label">${r[0]}</td>${tdN(r[1])}${tdA(r[2])}${tdB(r[3])}</tr>`).join('');
+  th+=`<tr class="hl"><td class="label">世帯手残り（年間概算）</td>${tdN(mS(ncn))}${tdA(mS(pA.net))}${tdB(pB?mS(pB.net):'')}</tr>`;
+  document.getElementById('compTable').innerHTML=th;
+  if(pB){const ld=pB.net-ncn;const bd=document.getElementById('planBadges');bd.style.display='block';bd.innerHTML=`<div class="info-box"><b>🟢 手残り最大プラン：</b>月${man(pA.pm)}万円の報酬に変更した場合。<br><b>🟡 生活優先プラン：</b>月${man(mt)}万円以上の手取りを確保しながら最適化した報酬（月${man(pB.pm)}万円）。${ld>0?`<br>生活優先プランでも現状比 <b>+${mS(ld)}/年</b>の改善が見込まれます。`:''}${pB.pm===cp?'<br><span style="color:var(--red)">⚠️ 最低手取りを確保するには現在の報酬水準が必要です。経費化などの代替策をご確認ください。</span>':''}</div>`;}
+  else document.getElementById('planBadges').style.display='none';
+  document.getElementById('baNow').textContent=man(ncn)+'万円';
+  document.getElementById('baOpt').textContent=man(nco)+'万円';
+  document.getElementById('baDiff').textContent=(df>=0?'+':'')+man(df)+'万円';
+  document.getElementById('summaryBanner').style.display='block';
+
+  // 借入金
+  let skH='';
+  if(sk>0){const pd=cp-pA.pm,rm=Math.min(pd,Math.round(sk/12/10000)*10000||pd),ry=rm>0?Math.ceil(sk/(rm*12)):999;
+    if(pd>0&&rm>0)skH=`<div class="option-card" style="margin-top:14px"><div class="o-tag best">役員借入金の活用</div><div class="o-label">報酬削減分を借入返済で補填（非課税）</div><div class="o-val better">月 ${man(rm)}万円 を非課税で受取可能</div><div class="o-desc">削減した報酬（月${man(pd)}万円）の一部を、過去に社長が会社に貸したお金の返済として受け取ります。返済金は所得税も社会保険料もかかりません。<br>借入残高 ${mS(sk)} ÷ 月${man(rm)}万円返済 ＝ 約<b>${ry}年で完済</b>の見込みです。</div></div><div class="warn-box"><b>⚠️ 注意点：</b>役員借入金がない会社ではこの手は使えません。極端な報酬削減は融資審査に悪影響を与える場合があります。必ず税理士・社労士に確認のうえ実行してください。</div>`;
+    else skH=`<div class="info-box" style="margin-top:10px">役員借入金 ${mS(sk)} が確認されました。報酬最適化後に残余分を返済スケジュールに組み込むか、税理士に相談してください。</div>`;}
+  document.getElementById('shakkinSection').innerHTML=skH;
+
+  // 代替案
+  let altH='';
+  if(sk===0){const ce=Math.round(py*0.05*0.235);altH=`<div style="margin-top:14px"><div class="r-title" style="margin-bottom:10px">役員借入金がない場合の代替手段</div><div class="option-card"><div class="o-tag neutral">代替案①</div><div class="o-label">法人経費の徹底（車・スマホ・生命保険・健康診断）</div><div class="o-val">法人税節税効果：年間 約${mS(ce)}〜</div><div class="o-desc">個人で払っている業務関連支出を法人経費に移します。社会保険料はかかりません。まず毎月の支出リストを書き出してみてください。</div></div><div class="option-card"><div class="o-tag neutral">代替案②</div><div class="o-label">倒産防止共済（経営セーフティ共済）への積立</div><div class="o-val">年間最大 240万円 全額損金</div><div class="o-desc">毎月最大20万円を全額損金で積み立てられます。40ヶ月で元本100%になり将来の退職金原資に。加入から40ヶ月未満の解約は元本割れします。</div></div><div class="option-card"><div class="o-tag neutral">代替案③</div><div class="o-label">小規模企業共済への加入</div><div class="o-val">年間最大 84万円 全額所得控除</div><div class="o-desc">社長個人が加入する退職金積立制度。掛金全額が所得控除になり個人の税金を直接圧縮します。</div></div><div class="warn-box"><b>⚠️ 経費化の注意：</b>業務利用の実態がない経費化は税務調査で否認されます。領収書の保管・使用記録を整備し、実行前に税理士に確認してください。</div></div>`;}
+  document.getElementById('altSection').innerHTML=altH;
+
+  // 報酬警告
+  let pwH='';
+  if(pA.pm<200000)pwH=`<div class="warn-box"><b>⚠️ 低報酬設定の注意：</b>役員報酬を大幅に下げると銀行融資審査に不利になる可能性があります。今後の借入・リスケジュールを予定している場合は、金融機関に事前相談してから変更してください。</div>`;
+  if(df>0)pwH+=`<div class="info-box" style="margin-top:8px"><b>📌 最適化の効果：</b>役員報酬を月${man(pA.pm)}万円に変更することで、年間約<b>${mS(df)}</b>の手残り改善が見込まれます（概算）。役員報酬の変更は事業年度開始後3ヶ月以内が原則（定期同額給与）。変更可能なタイミングを確認してください。</div>`;
+  else pwH+=`<div class="info-box" style="margin-top:8px"><b>📌 現在の設定：</b>現在の役員報酬設定はほぼ最適です。大幅な変更によるメリットは限定的な見込みです。</div>`;
+  document.getElementById('payWarn').innerHTML=pwH;
+
+  // 強制警告
+  if(pA.pm<150000&&cp-pA.pm>=200000)showForceWarn('⚠️ 役員報酬の大幅削減 — 銀行リスクの確認',`最適化後の役員報酬は月${man(pA.pm)}万円と、現在から${man(cp-pA.pm)}万円の大幅削減になります。\n\n銀行は社長の収入安定性を重視します。急激な報酬削減は「経営者の生活が成り立っていない」と判断され、既存融資のモニタリング強化・新規融資否決につながる可能性があります。\n\nまず金融機関の担当者に相談し、了解を得てから変更することをおすすめします。`);
+  if(hp>=0.5&&hr>=200000)showForceWarn('🟠 自宅家賃の按分 — 税務調査リスクの確認',`自宅家賃の${Math.round(hp*100)}%を法人経費とする設定です。\n\n50%以上の按分は税務調査で「過大」と判断されやすく、否認されると追徴課税・加算税の対象になることがあります。\n\n床面積の実測値を根拠にした按分計算書と、賃貸借契約書・振込記録を必ず整備してください。税理士の確認なしに実行しないでください。`);
+
+  // 消費税
+  if(vs>0){document.getElementById('vatCard').style.display='block';const gv=Math.max(0,vs-vp)*0.10,sv=vs*(1-dr)*0.10,cs2=vs<=50000000,bm=cs2&&sv<gv?'簡易課税':'原則課税（一般）',sav=Math.abs(gv-sv);let vH=`<div class="option-card"><div class="o-tag ${gv<=sv?'best':'neutral'}">原則課税（実額計算）</div><div class="o-label">実際の仕入・経費から計算</div><div class="o-val ${gv<=sv?'better':''}">年間消費税 約${mS(gv)}</div><div class="o-desc">課税売上 − 課税仕入から正確に計算。仕入・経費が多い業種に有利です。</div></div>`;
+    if(cs2)vH+=`<div class="option-card"><div class="o-tag ${sv<gv?'best':'neutral'}">簡易課税（みなし計算）</div><div class="o-label">売上×みなし仕入率${Math.round(dr*100)}%で計算</div><div class="o-val ${sv<gv?'better':''}">年間消費税 約${mS(sv)}</div><div class="o-desc">売上5,000万円以下の会社が選択可能。仕入率より実際の経費が少ない場合に有利です。</div></div>`;
+    vH+=`<div class="info-box">試算上は<b>「${bm}」</b>が約<b>${mS(sav)}</b>有利です。${cs2?'簡易課税の選択は前年末までに届出が必要です。':'課税売上5,000万円超のため簡易課税は対象外です。'}<br>消費税の課税方式変更は必ず税理士に確認してから届け出てください。</div>`;
+    document.getElementById('vatSection').innerHTML=vH;}
+  else document.getElementById('vatCard').style.display='none';
+
+  // 家賃
+  if(hp>0&&hr>0){document.getElementById('rentSection').style.display='block';const crm=Math.round(hr*hp/10000)*10000,ts=Math.round(crm*12*0.23);document.getElementById('rentContent').innerHTML=`<div class="option-card"><div class="o-tag best">自宅事務所按分（${Math.round(hp*100)}%）</div><div class="o-label">法人が個人に支払う家賃（月額）</div><div class="o-val better">月 ${man(crm)}万円</div><div class="o-desc">法人は全額経費計上でき、個人が受け取る家賃収入には<b>社会保険料がかかりません</b>。法人税節税効果：年間 約<b>${mS(ts)}</b>（概算）。</div></div><div class="warn-box"><b>⚠️ 注意点：</b>按分割合の根拠（床面積・稼働時間）を必ず書面で残してください。根拠のない過大按分は税務調査で否認されます。賃貸借契約書・振込記録も必須です。個人の不動産所得として確定申告が必要になります。</div>`;}
+  else document.getElementById('rentSection').style.display='none';
+
+  // アクション
+  const acts=[];
+  if(mo<=3&&mcf<0){acts.push({t:'【緊急】銀行にリスケジュール（返済猶予）を相談する',d:'先手の相談ほど選択肢が広がります。「経営改善計画書」の簡単な草案を持参してください。'});acts.push({t:'税務署・年金事務所へ分割納付を相談する',d:'社会保険料・税金は事前相談で猶予・分割が認められることがあります。放置すると差押リスクが高まります。'});}
+  if(df>100000)acts.push({t:`税理士に「役員報酬を月${man(pA.pm)}万円に変更したい」と伝える`,d:'定期同額給与の変更は事業年度開始後3ヶ月以内が原則。変更可能なタイミングを確認してください。'});
+  if(sk>0)acts.push({t:'決算書で役員借入金の残高を確認する',d:'短期借入金（役員勘定）の残高がある場合、返済スキームを税理士と一緒に設計できます。'});
+  if(vs>0)acts.push({t:'消費税の課税方式を税理士と確認する',d:'簡易課税への変更は前年末（前事業年度終了日まで）の届出が必要です。期限を逃すと1年固定になります。'});
+  if(hp>0)acts.push({t:'自宅事務所の按分割合を床面積で計算して書面に残す',d:'賃貸借契約書・振込記録を準備してください。税務調査に耐えられる根拠書類が必要です。'});
+  acts.push({t:'この結果を印刷して税理士に持っていく',d:'「この設定に変えたい」という具体的な数字を持ち込むと相談がスムーズになります。'});
+  document.getElementById('actionList').innerHTML=acts.map((a,i)=>`<li><div class="action-num">${i+1}</div><div class="action-body"><div class="a-title">${a.t}</div><div class="a-desc">${a.d}</div></div></li>`).join('');
+
+  window._cd={ncn,nco,df,bPm:pA.pm,cp,tN:now.tx,tO:pA.tx,sN:now.soc,sO:pA.soc,cN:now.ct,cO:pA.ct,mo,mcf,sk,b2Pm:pB?.pm??null,b2Net:pB?.net??null,mt,acts};
+  // 前回比較用にnco/ncnも保存
+  savePrev({cb,ms,me,cp,ag,py,sp,sk,mt,pf,vs:(parseFloat(document.getElementById('vatSales').value)||0)*10000,vp:(parseFloat(document.getElementById('vatPurchase').value)||0)*10000,nco,ncn});
+
+  // ── ③ 低報酬時の「生活費の内訳」説明パネル ──
+  const lowPayEl=document.getElementById('lowPayExplain');
+  if(pA.pm<=150000&&cp>0){
+    // 法人経費化できる生活費の試算
+    const carExpM=Math.round(cp*0.3/12/10000)*10000; // 車両費（報酬の30%想定）
+    const phoneM=15000;   // スマホ
+    const insureM=20000;  // 生命保険
+    const totalExpense=carExpM+phoneM+insureM;
+    const realLifeM=pA.pm/12+totalExpense; // 実質的な生活水準
+    // 役員借入金返済があれば追加
+    const repayM=sk>0?Math.min(cp-pA.pm,Math.round(sk/12/10000)*10000||0):0;
+    lowPayEl.style.display='block';
+    lowPayEl.innerHTML=`<div class="lowpay-panel">
+      <div class="lp-title">💡 月${man(pA.pm)}万円でも生活できる理由</div>
+      <div class="lp-row"><span class="lp-item">報酬として受け取る額</span><span class="lp-val">月 ${man(pA.pm)}万円</span></div>
+      ${repayM>0?`<div class="lp-row"><span class="lp-item">役員借入金の返済（非課税）</span><span class="lp-val">月 +${man(repayM)}万円</span></div>`:''}
+      <div class="lp-row"><span class="lp-item">車両・スマホ・保険など法人経費化</span><span class="lp-val">月 +${man(totalExpense)}万円相当</span></div>
+      <div class="lp-row" style="border-top:2px solid rgba(232,132,90,0.3);margin-top:4px;padding-top:8px"><span class="lp-item" style="font-weight:700">実質的な生活水準</span><span class="lp-val" style="color:var(--sun);font-size:15px">月 約${man(realLifeM)}万円相当</span></div>
+      <div class="lp-note">
+        ※車両・通信費・生命保険などの業務利用分を法人経費に移すことで、個人の手取りが少なくても実質的な生活水準を保てる場合があります。<br>
+        ただし業務利用の実態と根拠書類が必須です。実行前に必ず税理士に確認してください。<br>
+        ${sk>0?`役員借入金（${mS(sk)}）がある場合、返済として受け取る分には税金も社会保険料もかかりません。`:'役員借入金がない場合は返済受取は使えません。倒産防止共済・小規模企業共済の活用を検討してください。'}
+      </div>
+    </div>`;
+  } else {
+    lowPayEl.style.display='none';
+    lowPayEl.innerHTML='';
+  }
+
+  // ── 前回との比較表示 ──
+  const prevEl=document.getElementById('prevCompare');
+  if(prevData&&prevData.nco&&prevData.ncn){
+    const prevOptNet=prevData.nco;
+    const currOptNet=nco;
+    const prevCash=prevData.cb||0;
+    const currCash=cb;
+    const cashDiff=currCash-prevCash;
+    const netDiff=currOptNet-prevOptNet;
+    const prevDate=prevData.savedAt?new Date(prevData.savedAt):null;
+    const dateStr=prevDate?`${prevDate.getMonth()+1}月${prevDate.getDate()}日`:'前回';
+    prevEl.style.display='block';
+    prevEl.innerHTML=`<div class="prev-card">
+      <div class="pc-title">📊 ${dateStr}との比較</div>
+      <div class="pc-grid">
+        <div class="pc-col pc-old"><div class="pc-label">前回の口座残高</div><div class="pc-val">${man(prevCash)}万</div></div>
+        <div class="pc-col pc-new"><div class="pc-label">今回の口座残高</div><div class="pc-val">${man(currCash)}万</div></div>
+        <div class="pc-col pc-diff"><div class="pc-label">変化</div><div class="pc-val ${cashDiff<0?'neg':''}">${cashDiff>=0?'+':''}${man(cashDiff)}万</div></div>
+      </div>
+      <div class="pc-grid" style="margin-top:10px">
+        <div class="pc-col pc-old"><div class="pc-label">前回の最適手残り</div><div class="pc-val">${man(prevOptNet)}万</div></div>
+        <div class="pc-col pc-new"><div class="pc-label">今回の最適手残り</div><div class="pc-val">${man(currOptNet)}万</div></div>
+        <div class="pc-col pc-diff"><div class="pc-label">変化</div><div class="pc-val ${netDiff<0?'neg':''}">${netDiff>=0?'+':''}${man(netDiff)}万</div></div>
+      </div>
+      <div class="pc-date">${cashDiff<0?'⚠️ 口座残高が減っています。状況が改善されていない場合は早めに税理士・銀行へ相談してください。':'✅ 前回より口座残高が増えています。'}</div>
+    </div>`;
+  } else {
+    prevEl.style.display='none';
+  }
+
+  // ══════════════════════════════════════════
+  // 案A: 今夜の一手（効果が最大の手を1つ選ぶ）
+  // ══════════════════════════════════════════
+  // 各手の効果を数値で比較して最大効果の手を選出
+  const hands=[];
+
+  // 手①: 役員報酬最適化
+  if(cp>0&&py>0&&df>100000){
+    hands.push({
+      priority: df,
+      label:'役員報酬の見直し',
+      action:`現在 月${man(cp)}万円 → 月${man(pA.pm)}万円 への変更を検討`,
+      effect:`年間 +${mS(df)} のキャッシュ改善が見込まれます`,
+      why:`所得税・社会保険料の等級が下がることで、税負担を軽減できる可能性があります。役員報酬の変更は事業年度開始後3ヶ月以内が原則です。`,
+      scriptKey:'tax'
+    });
+  }
+
+  // 手②: 資金ショートが3ヶ月以内→銀行リスケが最優先
+  if(mo<=3&&mcf<0){
+    hands.unshift({
+      priority:99999999,
+      label:'銀行への返済猶予（リスケジュール）相談',
+      action:'銀行の担当者に「返済条件の見直しを相談したい」と連絡する',
+      effect:`月${man(-mcf)}万円の支出超過を緩和できる可能性があります`,
+      why:`リスケジュールが認められると月々の返済額が減り、手元資金を守れます。先に連絡するほど銀行の対応は柔軟になります。放置すると選択肢が狭まります。`,
+      scriptKey:'bank'
+    });
+  }
+
+  // 手③: 消費税の切り替えが有利な場合
+  if(vs>0){
+    const gv=Math.max(0,vs-vp)*0.10;
+    const sv=vs*(1-dr)*0.10;
+    const vatSaving=Math.abs(gv-sv);
+    if(vatSaving>100000){
+      hands.push({
+        priority:vatSaving*0.8,
+        label:'消費税の課税方式変更',
+        action:`${sv<gv?'簡易課税':'原則課税'}への切り替えを税理士に相談`,
+        effect:`年間 約${mS(vatSaving)} の消費税削減が見込まれます`,
+        why:`現在の仕入・経費の状況から、課税方式を変更することで有利になる可能性があります。届出には期限があります。`,
+        scriptKey:'tax'
+      });
+    }
+  }
+
+  // 最優先の手を1つ選ぶ
+  hands.sort((a,b)=>b.priority-a.priority);
+  const topHand=hands[0];
+  const tonightCard=document.getElementById('tonightCard');
+  const tonightContent=document.getElementById('tonightContent');
+
+  if(topHand){
+    tonightCard.style.display='block';
+    // サブ候補（2番目以降）
+    const subHands=hands.slice(1,3);
+    const subHTML=subHands.length>0
+      ?`<div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
+          <div style="font-size:11px;color:var(--ink3);font-weight:700;margin-bottom:8px">次に検討できる選択肢</div>
+          ${subHands.map(h=>`<div style="font-size:12px;color:var(--ink2);padding:6px 0;border-bottom:1px solid var(--bg3);display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+            <div><b>${h.label}</b><div style="color:var(--ink3);font-size:11px;margin-top:2px">${h.effect}</div></div>
+          </div>`).join('')}
+        </div>`:'';
+    tonightContent.innerHTML=`
+      <div class="tonight-header">
+        <div class="tonight-badge">今夜の一手</div>
+        <div class="tonight-title">${topHand.label}</div>
+      </div>
+      <div class="tonight-action">
+        <div class="ta-label">検討すべき対応（選択肢の一つです）</div>
+        <div class="ta-main">${topHand.action}</div>
+        <div class="ta-effect">効果の目安：${topHand.effect}</div>
+        <div class="ta-why">${topHand.why}</div>
+      </div>
+      ${subHTML}
+      <div class="tonight-legal">※本結果は一般的な計算モデルに基づく参考情報です。前提条件により結果は変動します。最終的な判断や手続きは税理士等の専門家へご確認ください。</div>`;
+  } else {
+    tonightCard.style.display='none';
+  }
+
+  // ══════════════════════════════════════════
+  // 案D: やめていいことリスト（例示型）
+  // ══════════════════════════════════════════
+  const stopCard=document.getElementById('stopCard');
+  const stopContent=document.getElementById('stopContent');
+  stopCard.style.display='block';
+
+  // 状況に応じた優先度つき例示リスト
+  const stopExamples=[];
+
+  // 役員報酬が最適化で下がる場合 → 社保削減が一番効く
+  if(df>200000){
+    stopExamples.push({
+      priority:1,
+      name:'社会保険料の等級を下げる',
+      desc:'役員報酬を見直すと社会保険の等級が下がり、毎月の社保負担が減ります。',
+      action:'税理士に「役員報酬の変更タイミング」を確認する',
+      isHighlight:true
+    });
+  }
+
+  // 共通の例示（金額は出さない）
+  stopExamples.push(
+    {priority:2,name:'使っていない法人カード・口座の整理',desc:'年会費・維持費が発生しているカードや休眠口座を確認する。',action:'カード会社・銀行の明細を1枚ずつ確認する'},
+    {priority:3,name:'クラウドサービス・サブスクの棚卸し',desc:'毎月自動引き落とちになっているサービスを一覧にする。不要なものは即解約可能。',action:'クレジット明細を開いてサブスクに印をつける'},
+    {priority:4,name:'法人の保険を棚卸しする',desc:'加入目的が曖昧になっている法人保険・生命保険を確認する。解約返戻金がある場合は税務上の処理も必要。',action:'保険証券を一か所に集めて保険料の合計額を確認する'},
+    {priority:5,name:'役員・家族への報酬配分の見直し',desc:'配偶者や家族への報酬額が業務実態に合っているか確認する。過少・過大どちらも税務リスクになる。',action:'税理士に「現在の役員報酬の配分が適切か」を確認する'}
+  );
+
+  // 自宅家賃を法人経費化していない場合は追加
+  if(hp===0&&cp>=200000){
+    stopExamples.push({
+      priority:2.5,
+      name:'自宅家賃・光熱費の一部を法人経費に',
+      desc:'自宅を事務所として使っている場合、業務利用分を法人経費に計上できる可能性がある。',
+      action:'税理士に「自宅の按分計上」が可能か確認する'
+    });
+  }
+
+  stopExamples.sort((a,b)=>a.priority-b.priority);
+
+  stopContent.innerHTML=stopExamples.map((i,idx)=>`
+    <div class="stop-item">
+      <div class="stop-left">
+        <div class="s-name">${i.isHighlight?'⭐ ':''}<b>${i.name}</b></div>
+        <div class="s-desc">${i.desc}</div>
+        <div class="s-desc" style="color:var(--teal);margin-top:3px">→ ${i.action}</div>
+      </div>
+    </div>`).join('')
+    +`<div class="stop-note">※金額は出していません。実際にいくら削減できるかは中身を確認してみてください。税務に関わる項目は必ず税理士に確認してから動いてください。</div>`;
+
+  // ══════════════════════════════════════════
+  // 案C: 相談文生成
+  // ══════════════════════════════════════════
+  const today=new Date();
+  const dateStr=`${today.getFullYear()}年${today.getMonth()+1}月${today.getDate()}日`;
+
+  // 税理士向け文面
+  const taxScript=`税理士の先生へ
+
+シミュレーションツールで試算したところ、以下の見直しでキャッシュが改善できる可能性があることがわかりました。
+
+【現状】
+・役員報酬：月${man(cp)}万円
+・会社の年間利益（報酬控除前）：約${man(py)}万円
+・現在の手残り（年間概算）：約${man(ncn)}万円
+
+【試算結果】
+・役員報酬を月${man(pA.pm)}万円に変更した場合
+・税金・社保の削減効果：年間 約${man(df)}万円
+・変更後の手残り（年間概算）：約${man(nco)}万円
+
+この前提・計算に問題がないか確認していただき、
+実際に変更できる場合のスケジュールを教えていただけますでしょうか。
+
+※本試算は「社長の防衛線」による参考値です。${dateStr}時点`;
+
+  // 銀行向け文面（資金ショートリスクがある場合のみ生成）
+  const bankScript=mo<999&&mcf<0?`○○銀行 担当○○様
+
+お世話になっております、○○（会社名）の○○と申します。
+
+現在の資金繰りについてご相談させてください。
+
+【現状】
+・月間収支：${man(mcf)}万円（支出超過）
+・口座残高：約${man(cb)}万円
+・このままの場合の資金余命：約${mo}ヶ月
+
+借入返済条件の見直し（リスケジュール）について
+ご相談の機会をいただけますでしょうか。
+
+経営改善に取り組んでおり、具体的な数字をお持ちします。
+お時間を15〜30分ほどいただけますと幸いです。
+
+${dateStr}`:'';
+
+  // 相談文3パターン生成
+  // LINE用（カジュアル）
+  const taxScriptLine=`先生、シミュレーションしてみたんですが
+役員報酬を月${man(cp)}万→${man(pA.pm)}万に変えると
+年間${man(df)}万くらい手残りが増えそうな結果が出ました
+
+実際に変更できるか確認させてもらえますか？
+タイミングとか手続きも教えてもらえると助かります`;
+
+  // メール用（通常）
+  const taxScriptMail=`お世話になっております。
+シミュレーションツールで試算したところ、
+役員報酬の見直しでキャッシュが改善できる可能性があることがわかりました。
+
+【現状】役員報酬：月${man(cp)}万円 / 年間利益（報酬前）：約${man(py)}万円
+【試算】報酬を月${man(pA.pm)}万円に変更した場合、年間約${man(df)}万円の改善が見込まれます
+
+実際に変更できるかどうか、またそのタイミングについてご確認いただけますでしょうか。
+よろしくお願いいたします。`;
+
+  // 丁寧版（初対面・初回相談）
+  const taxScriptFormal=`はじめてご連絡いたします、○○（会社名）の○○と申します。
+現在の役員報酬の設定について税理士の先生にご相談したいと思いご連絡いたしました。
+
+シミュレーションツールで試算した結果、
+役員報酬を現在の月${man(cp)}万円から月${man(pA.pm)}万円に変更することで、
+年間約${man(df)}万円のキャッシュ改善が見込まれる可能性があることがわかりました。
+
+この試算の前提・妥当性についてご確認いただき、
+実際に変更できる場合のスケジュールをご教示いただけますでしょうか。
+
+お忙しいところ恐縮ですが、どうぞよろしくお願いいたします。`;
+
+  const bankScriptLine=bankScript?`○○さん、お世話になっております。
+資金繰りについてご相談させてください。
+現在、月${man(-mcf)}万円ほどの支出超過が続いており、
+返済条件の見直しについて相談の機会をいただけますでしょうか。
+具体的な数字をお持ちしますので、15〜30分ほどお時間いただけると助かります。`:'';
+
+  const tabs=[
+    {key:'tax_line',label:'税理士へ（LINE）',script:taxScriptLine},
+    {key:'tax_mail',label:'税理士へ（メール）',script:taxScriptMail},
+    {key:'tax_formal',label:'税理士へ（丁寧・初対面）',script:taxScriptFormal}
+  ];
+  if(bankScriptLine)tabs.push({key:'bank',label:'銀行へ（LINE）',script:bankScriptLine});
+
+  window._scripts=tabs;
+  window._activeScript=0;
+
+  const tabsEl=document.getElementById('scriptTabs');
+  tabsEl.innerHTML=tabs.map((t,i)=>`<button class="script-tab${i===0?' active':''}" onclick="switchScript(${i})">${t.label}</button>`).join('');
+  showScript(0);
+
+  document.getElementById('results').style.display='block';
+  document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function showForceWarn(title,body){document.getElementById('fwTitle').textContent=title;document.getElementById('fwBody').innerHTML=body.replace(/\n\n/g,'<br><br>').replace(/\n/g,'<br>');document.getElementById('forceWarn').style.display='flex';}
+function closeForceWarn(){document.getElementById('forceWarn').style.display='none';}
+
+function showScript(idx){
+  const s=window._scripts;if(!s||!s[idx])return;
+  document.getElementById('scriptContent').innerHTML=`<div class="script-box">${s[idx].script.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>`;
+  window._activeScript=idx;
+}
+function switchScript(idx){
+  document.querySelectorAll('.script-tab').forEach((t,i)=>t.classList.toggle('active',i===idx));
+  showScript(idx);
+}
+function copyScript(){
+  const s=window._scripts;if(!s)return;
+  const txt=s[window._activeScript||0].script;
+  navigator.clipboard.writeText(txt).then(()=>{
+    const b=document.getElementById('scriptCopyBtn');
+    b.textContent='✅ コピーしました！';b.classList.add('copied');
+    setTimeout(()=>{b.textContent='📋 この文章をコピーする';b.classList.remove('copied');},3000);
+  }).catch(()=>alert('コピーに失敗しました。'));
+}
+function copyResult(){
+  const d=window._cd;if(!d)return;
+  const n=new Date(),ds=`${n.getFullYear()}年${n.getMonth()+1}月${n.getDate()}日`;
+  const cs=d.mcf>=0?'黒字':`あと約${d.mo}ヶ月`;
+  const bl=d.b2Pm?`\n生活優先プラン（月${man(d.mt)}万円以上確保）: 月${man(d.b2Pm)}万円 → 手残り${man(d.b2Net)}万円/年`:'';
+  const txt=`【社長の防衛線 シミュレーション結果】${ds}\n\n━━ 資金ショート予測 ━━\n月間収支: ${d.mcf>=0?'+':''}${man(d.mcf)}万円\n資金余命: ${cs}\n\n━━ 役員報酬の最適化 ━━\n現在の役員報酬（月額）: ${man(d.cp)}万円\n\n【手残り最大プラン】月${man(d.bPm)}万円 → 手残り${man(d.nco)}万円/年${bl}\n\n          【現在】   【最適化後】\n税金:     ${man(d.tN)}万円 → ${man(d.tO)}万円\n社会保険: ${man(d.sN)}万円 → ${man(d.sO)}万円\n法人税:   ${man(d.cN)}万円 → ${man(d.cO)}万円\n\n現在の手残り（年）:    ${man(d.ncn)}万円\n最適化後の手残り（年）: ${man(d.nco)}万円\n差額: ${d.df>=0?'+':''}${man(d.df)}万円\n\n━━ 今日やること ━━\n${d.acts.map((a,i)=>`${i+1}. ${a.t}`).join('\n')}\n\n※本シミュレーションは参考値です。最終判断は税理士にご相談ください。\nツール: 社長の防衛線（SOKE経済技術研究所）`;
+  navigator.clipboard.writeText(txt).then(()=>{const b=document.getElementById('copyBtn');b.textContent='✅ コピーしました！';b.classList.add('copied');setTimeout(()=>{b.textContent='📋 この結果をテキストでコピーする（税理士に送る用）';b.classList.remove('copied');},3000);}).catch(()=>alert('コピーに失敗しました。'));
+}
+</script>
+</body>
+</html>
