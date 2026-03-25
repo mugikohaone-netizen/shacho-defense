@@ -226,7 +226,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Noto Sans JP',sans-serif
   <div class="force-warn-box">
     <h2 id="fwTitle">⚠️ 確認してください</h2>
     <p id="fwBody"></p>
-    <button class="fw-confirm" onclick="closeForceWarn()">内容を理解した上で続ける</button>
+    <button type="button" class="fw-confirm" onclick="closeForceWarn()">内容を理解した上で続ける</button>
   </div>
 </div>
 
@@ -277,8 +277,8 @@ body{background:var(--bg);color:var(--ink);font-family:'Noto Sans JP',sans-serif
     <div class="field f-gap">
       <label>会社の年間利益の入力方法</label>
       <div class="toggle-group" id="profitModeGroup">
-        <button class="toggle-btn active" data-mode="easy" onclick="switchProfitMode(this,'easy')">💡 かんたん（感覚で入力）</button>
-        <button class="toggle-btn" data-mode="exact" onclick="switchProfitMode(this,'exact')">数字で入力</button>
+        <button type="button" class="toggle-btn active" data-mode="easy" onclick="switchProfitMode(this,'easy')">💡 かんたん（感覚で入力）</button>
+        <button type="button" class="toggle-btn" data-mode="exact" onclick="switchProfitMode(this,'exact')">数字で入力</button>
       </div>
     </div>
 
@@ -287,23 +287,23 @@ body{background:var(--bg);color:var(--ink);font-family:'Noto Sans JP',sans-serif
       <div class="field">
         <label>月の売上（ざっくり） <span class="sub-label">（万円）</span></label>
         <div class="toggle-group" id="salesPresetGroup" style="flex-wrap:wrap">
-          <button class="toggle-btn" data-val="100" onclick="selectSalesPreset(this)">100万</button>
-          <button class="toggle-btn" data-val="200" onclick="selectSalesPreset(this)">200万</button>
-          <button class="toggle-btn" data-val="300" onclick="selectSalesPreset(this)">300万</button>
-          <button class="toggle-btn" data-val="500" onclick="selectSalesPreset(this)">500万</button>
-          <button class="toggle-btn" data-val="800" onclick="selectSalesPreset(this)">800万</button>
-          <button class="toggle-btn" data-val="1000" onclick="selectSalesPreset(this)">1000万</button>
+          <button type="button" class="toggle-btn" data-val="100" onclick="selectSalesPreset(this)">100万</button>
+          <button type="button" class="toggle-btn" data-val="200" onclick="selectSalesPreset(this)">200万</button>
+          <button type="button" class="toggle-btn" data-val="300" onclick="selectSalesPreset(this)">300万</button>
+          <button type="button" class="toggle-btn" data-val="500" onclick="selectSalesPreset(this)">500万</button>
+          <button type="button" class="toggle-btn" data-val="800" onclick="selectSalesPreset(this)">800万</button>
+          <button type="button" class="toggle-btn" data-val="1000" onclick="selectSalesPreset(this)">1000万</button>
         </div>
         <input type="number" id="salesPresetCustom" placeholder="上にない場合はここに入力（万円）" min="0" inputmode="numeric" style="margin-top:8px" oninput="updateEasyProfit()">
       </div>
       <div class="field f-gap">
         <label>売上のうち、どれくらい手元に残りますか？<span class="sub-label">（感覚でOK）</span></label>
         <div class="toggle-group" id="marginGroup" style="flex-wrap:wrap">
-          <button class="toggle-btn" data-val="0.03" onclick="selectToggle(this,'marginGroup');updateEasyProfit()">ほぼ残らない<br><span style="font-size:10px">〜5%</span></button>
-          <button class="toggle-btn" data-val="0.10" onclick="selectToggle(this,'marginGroup');updateEasyProfit()">少し残る<br><span style="font-size:10px">10%くらい</span></button>
-          <button class="toggle-btn active" data-val="0.20" onclick="selectToggle(this,'marginGroup');updateEasyProfit()">普通<br><span style="font-size:10px">20%くらい</span></button>
-          <button class="toggle-btn" data-val="0.30" onclick="selectToggle(this,'marginGroup');updateEasyProfit()">そこそこ<br><span style="font-size:10px">30%くらい</span></button>
-          <button class="toggle-btn" data-val="0.40" onclick="selectToggle(this,'marginGroup');updateEasyProfit()">よく残る<br><span style="font-size:10px">40%以上</span></button>
+          <button type="button" class="toggle-btn" data-val="0.03" onclick="selectToggle(this,'marginGroup');updateEasyProfit()">ほぼ残らない<br><span style="font-size:10px">〜5%</span></button>
+          <button type="button" class="toggle-btn" data-val="0.10" onclick="selectToggle(this,'marginGroup');updateEasyProfit()">少し残る<br><span style="font-size:10px">10%くらい</span></button>
+          <button type="button" class="toggle-btn active" data-val="0.20" onclick="selectToggle(this,'marginGroup');updateEasyProfit()">普通<br><span style="font-size:10px">20%くらい</span></button>
+          <button type="button" class="toggle-btn" data-val="0.30" onclick="selectToggle(this,'marginGroup');updateEasyProfit()">そこそこ<br><span style="font-size:10px">30%くらい</span></button>
+          <button type="button" class="toggle-btn" data-val="0.40" onclick="selectToggle(this,'marginGroup');updateEasyProfit()">よく残る<br><span style="font-size:10px">40%以上</span></button>
         </div>
       </div>
       <div id="easyProfitResult" class="easy-result" style="display:none"></div>
@@ -319,7 +319,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Noto Sans JP',sans-serif
     <input type="hidden" id="profitYEasy" value="0">
   </div>
 
-  <button class="expand-toggle" id="expandToggle" onclick="toggleExpand()">もっと詳しく計算する（配偶者報酬・借入金・消費税・自宅家賃など）</button>
+  <button type="button" class="expand-toggle" id="expandToggle" onclick="toggleExpand()">もっと詳しく計算する（配偶者報酬・借入金・消費税・自宅家賃など）</button>
 
   <div class="expand-body" id="expandBody">
     <div class="card amber-accent">
@@ -351,10 +351,10 @@ body{background:var(--bg);color:var(--ink);font-family:'Noto Sans JP',sans-serif
       <div class="field f-gap">
         <label>業種</label>
         <div class="toggle-group" id="industryGroup">
-          <button class="toggle-btn active" data-val="0.50" onclick="selectToggle(this,'industryGroup')">IT・コンサル</button>
-          <button class="toggle-btn" data-val="0.60" onclick="selectToggle(this,'industryGroup')">建設・飲食</button>
-          <button class="toggle-btn" data-val="0.70" onclick="selectToggle(this,'industryGroup')">農業・卸</button>
-          <button class="toggle-btn" data-val="0.80" onclick="selectToggle(this,'industryGroup')">小売</button>
+          <button type="button" class="toggle-btn active" data-val="0.50" onclick="selectToggle(this,'industryGroup')">IT・コンサル</button>
+          <button type="button" class="toggle-btn" data-val="0.60" onclick="selectToggle(this,'industryGroup')">建設・飲食</button>
+          <button type="button" class="toggle-btn" data-val="0.70" onclick="selectToggle(this,'industryGroup')">農業・卸</button>
+          <button type="button" class="toggle-btn" data-val="0.80" onclick="selectToggle(this,'industryGroup')">小売</button>
         </div>
         <div class="hint" style="margin-top:6px">簡易課税のみなし仕入率の目安</div>
       </div>
@@ -365,9 +365,9 @@ body{background:var(--bg);color:var(--ink);font-family:'Noto Sans JP',sans-serif
       <div class="field">
         <label>自宅を事務所として使用していますか？</label>
         <div class="toggle-group" id="homeOfficeGroup">
-          <button class="toggle-btn active" data-val="0" onclick="selectToggle(this,'homeOfficeGroup')">していない</button>
-          <button class="toggle-btn" data-val="30" onclick="selectToggle(this,'homeOfficeGroup')">一部（約30%）</button>
-          <button class="toggle-btn" data-val="50" onclick="selectToggle(this,'homeOfficeGroup')">半分程度（約50%）</button>
+          <button type="button" class="toggle-btn active" data-val="0" onclick="selectToggle(this,'homeOfficeGroup')">していない</button>
+          <button type="button" class="toggle-btn" data-val="30" onclick="selectToggle(this,'homeOfficeGroup')">一部（約30%）</button>
+          <button type="button" class="toggle-btn" data-val="50" onclick="selectToggle(this,'homeOfficeGroup')">半分程度（約50%）</button>
         </div>
       </div>
       <div class="field f-gap" id="rentField" style="display:none">
@@ -377,7 +377,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Noto Sans JP',sans-serif
     </div>
   </div>
 
-  <button class="calc-btn" onclick="calculate()">今の状況を確認する →</button>
+  <button type="button" class="calc-btn" onclick="calculate()">今の状況を確認する →</button>
   <p class="calc-note">※計算結果は参考値です。税務アドバイスではありません。最終判断は必ず税理士へ。</p>
 
   <div id="results">
@@ -444,11 +444,11 @@ body{background:var(--bg);color:var(--ink);font-family:'Noto Sans JP',sans-serif
       <div class="r-title">専門家への相談文（コピーして送るだけ）</div>
       <div id="scriptTabs" style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap"></div>
       <div id="scriptContent"></div>
-      <button class="copy-btn" id="scriptCopyBtn" onclick="copyScript()">📋 この文章をコピーする</button>
+      <button type="button" class="copy-btn" id="scriptCopyBtn" onclick="copyScript()">📋 この文章をコピーする</button>
     </div>
 
     <div class="card" style="background:var(--bg3);border:none;box-shadow:none">
-      <button class="copy-btn" id="copyBtn" onclick="copyResult()">📊 計算結果の全データをコピーする（税理士への資料用）</button>
+      <button type="button" class="copy-btn" id="copyBtn" onclick="copyResult()">📊 計算結果の全データをコピーする（税理士への資料用）</button>
     </div>
 
     <div class="disclaimer">
@@ -952,7 +952,7 @@ ${dateStr}`:'';
   window._activeScript=0;
 
   const tabsEl=document.getElementById('scriptTabs');
-  tabsEl.innerHTML=tabs.map((t,i)=>`<button class="script-tab${i===0?' active':''}" onclick="switchScript(${i})">${t.label}</button>`).join('');
+  tabsEl.innerHTML=tabs.map((t,i)=>`<button type="button" class="script-tab${i===0?' active':''}" onclick="switchScript(${i})">${t.label}</button>`).join('');
   showScript(0);
 
   document.getElementById('results').style.display='block';
