@@ -1,13 +1,4 @@
-dth:200px;height:200px;background:radial-gradient(circle,rgba(232,132,90,0.3) 0%,transparent 70%);pointer-events:none;}
-.hero::after{content:'';position:absolute;bottom:-20px;left:30%;width:160px;height:160px;background:radial-gradient(circle,rgba(42,140,140,0.2) 0%,transparent 70%);pointer-events:none;}
-.hero-inner{max-width:680px;margin:0 auto;position:relative;}
-.hero-tag{display:inline-block;background:var(--sun);color:#fff;font-size:11px;font-weight:700;letter-spacing:1.5px;padding:3px 10px;border-radius:20px;margin-bottom:12px;}
-.hero h1{font-family:'Zen Kaku Gothic New',sans-serif;font-size:clamp(22px,5vw,30px);font-weight:900;color:#fff;line-height:1.3;margin-bottom:10px;}
-.hero h1 em{color:var(--sun2);font-style:normal;}
-.hero p{font-size:13px;color:rgba(255,255,255,0.65);line-height:1.7;}
-#summaryBanner{display:none;position:sticky;top:0;z-index:100;background:var(--bg2);border-bottom:2px solid var(--teal);box-shadow:var(--shadow);}
-.ba-inner{max-width:680px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 16px;gap:6px;flex-wrap:wrap;}
-.ba-block{text-align:ce<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -223,86 +214,13 @@ body{background:var(--bg);color:var(--ink);font-family:'Noto Sans JP',sans-serif
 .deep-result-box.type-rep{background:linear-gradient(135deg,#FFF0EE,#FFE4DF);border:2px solid #F5A99A;}
 .deep-result-box.type-ok{background:linear-gradient(135deg,#F0FBF5,#E8F5EE);border:2px solid #8ACFAA;}
 .deep-type-label{font-size:11px;font-weight:900;letter-spacing:1px;margin-bottom:6px;}
-.deep-headline{font-family:"Zen Kaku Gothic New",sans-serif;font-size:18px;font-weight:900;margin-botweight:700;margin-bottom:14px;letter-spacing:0.5px;}
-.hero-voice{background:rgba(255,255,255,0.07);border-left:3px solid var(--sun2);border-radius:0 8px 8px 0;padding:12px 16px;margin-top:4px;}
-.hero-voice-text{font-size:13px;color:rgba(255,255,255,0.75);line-height:1.8;}
-.hero-voice-text b{color:var(--sun2);}
-.step-intro{font-size:13px;color:var(--ink3);line-height:1.7;margin-bottom:0;}
-.sanmo-msg{border-radius:14px;padding:18px 20px;margin-bottom:16px;position:relative;}
-.sanmo-msg.s-safe{background:linear-gradient(135deg,var(--teal3),#EBF8F8);border:1.5px solid var(--teal2);}
-.sanmo-msg.s-caution{background:linear-gradient(135deg,var(--amber3),#FEF8EC);border:1.5px solid #F5C860;}
-.sanmo-msg.s-danger{background:linear-gradient(135deg,var(--sun3),#FDEEE8);border:1.5px solid var(--sun2);}
-.sanmo-msg.s-critical{background:linear-gradient(135deg,var(--red3),#FDECEA);border:1.5px solid #F5A99A;}
-.sanmo-icon{font-size:28px;margin-bottom:8px;}
-.sanmo-headline{font-family:'Zen Kaku Gothic New',sans-serif;font-size:18px;font-weight:900;line-height:1.3;margin-bottom:8px;}
-.sanmo-msg.s-safe .sanmo-headline{color:var(--teal);}
-.sanmo-msg.s-caution .sanmo-headline{color:var(--amber);}
-.sanmo-msg.s-danger .sanmo-headline{color:var(--sun);}
-.sanmo-msg.s-critical .sanmo-headline{color:var(--red);}
-.sanmo-body{font-size:13px;color:var(--ink2);line-height:1.8;}
-.sanmo-body b{color:var(--ink);}
-.sanmo-next{display:inline-block;margin-top:12px;font-size:12px;font-weight:700;color:var(--ink3);background:rgba(255,255,255,0.6);padding:5px 12px;border-radius:20px;}
-/* 今夜の一手 */
-.tonight-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
-.tonight-badge{background:var(--sun);color:#fff;font-size:11px;font-weight:900;letter-spacing:1px;padding:3px 10px;border-radius:20px;flex-shrink:0;}
-.tonight-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:15px;font-weight:900;color:var(--ink);}
-.tonight-action{background:var(--bg3);border-radius:12px;padding:14px 16px;margin-bottom:12px;}
-.tonight-action .ta-label{font-size:11px;color:var(--ink3);margin-bottom:4px;}
-.tonight-action .ta-main{font-family:'Zen Kaku Gothic New',sans-serif;font-size:17px;font-weight:900;color:var(--sun);line-height:1.3;}
-.tonight-action .ta-effect{font-size:13px;font-weight:700;color:var(--teal);margin-top:6px;}
-.tonight-action .ta-why{font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.6;}
-.tonight-legal{font-size:11px;color:var(--ink3);border-top:1px solid var(--border);padding-top:10px;margin-top:10px;line-height:1.6;}
-/* かんたん推計モード */
-.easy-result{background:var(--teal3);border:1.5px solid var(--teal2);border-radius:10px;padding:12px 14px;margin-top:10px;}
-.easy-result .er-label{font-size:11px;color:var(--teal);font-weight:700;margin-bottom:4px;}
-.easy-result .er-val{font-family:'Zen Kaku Gothic New',sans-serif;font-size:20px;font-weight:900;color:var(--teal);}
-.easy-result .er-note{font-size:11px;color:var(--ink3);margin-top:4px;}
-#salesPresetGroup .toggle-btn{font-size:12px;padding:6px 10px;}
-#marginGroup .toggle-btn{font-size:12px;padding:8px 10px;text-align:center;line-height:1.3;}
-/* やめていいことリスト */
-.stop-item{display:flex;justify-content:space-between;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--bg3);}
-.stop-item:last-child{border-bottom:none;}
-.stop-left .s-name{font-size:13px;font-weight:700;color:var(--ink);}
-.stop-left .s-desc{font-size:11px;color:var(--ink3);margin-top:2px;}
-.stop-right{text-align:right;flex-shrink:0;margin-left:12px;}
-.stop-right .s-amount{font-family:'Zen Kaku Gothic New',sans-serif;font-size:15px;font-weight:900;color:var(--red);}
-.stop-right .s-unit{font-size:10px;color:var(--ink3);}
-.stop-total{background:var(--red3);border-radius:8px;padding:10px 14px;margin-top:10px;display:flex;justify-content:space-between;align-items:center;}
-.stop-total .st-label{font-size:12px;font-weight:700;color:var(--red);}
-.stop-total .st-val{font-family:'Zen Kaku Gothic New',sans-serif;font-size:18px;font-weight:900;color:var(--red);}
-.stop-note{font-size:11px;color:var(--ink3);margin-top:8px;line-height:1.6;}
-/* 相談文タブ */
-.script-tab{padding:7px 14px;border-radius:20px;border:1.5px solid var(--border);background:var(--bg3);color:var(--ink3);font-size:13px;cursor:pointer;font-family:'Noto Sans JP',sans-serif;transition:all 0.15s;}
-.script-tab.active{background:var(--teal);border-color:var(--teal);color:#fff;font-weight:700;}
-.script-box{background:var(--bg3);border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;font-size:13px;color:var(--ink2);line-height:1.85;white-space:pre-wrap;word-break:break-all;margin-bottom:10px;}
-.script-to{font-size:11px;color:var(--ink3);margin-bottom:8px;}
-/* 低報酬説明パネル */
-.lowpay-panel{background:var(--sun3);border:1.5px solid var(--sun2);border-radius:12px;padding:14px 16px;margin-top:10px;}
-.lowpay-panel .lp-title{font-family:'Zen Kaku Gothic New',sans-serif;font-size:14px;font-weight:900;color:var(--sun);margin-bottom:8px;}
-.lowpay-panel .lp-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(232,132,90,0.2);font-size:12px;}
-.lowpay-panel .lp-row:last-child{border-bottom:none;}
-.lowpay-panel .lp-item{color:var(--ink2);}
-.lowpay-panel .lp-val{font-weight:700;color:var(--ink);}
-.lowpay-panel .lp-note{font-size:11px;color:var(--ink3);margin-top:8px;line-height:1.6;}
-/* 前回比較 */
-.prev-card{background:var(--bg3);border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;margin-top:10px;}
-.prev-card .pc-title{font-size:12px;font-weight:700;color:var(--ink3);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
-.prev-card .pc-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center;}
-.prev-card .pc-col .pc-label{font-size:10px;color:var(--ink3);}
-.prev-card .pc-col .pc-val{font-family:'Zen Kaku Gothic New',sans-serif;font-size:16px;font-weight:900;}
-.prev-card .pc-col.pc-old .pc-val{color:var(--ink3);}
-.prev-card .pc-col.pc-new .pc-val{color:var(--teal);}
-.prev-card .pc-col.pc-diff .pc-val{color:var(--sun);}
-.prev-card .pc-col.pc-diff .pc-val.neg{color:var(--red);}
-.prev-card .pc-date{font-size:10px;color:var(--ink3);margin-top:8px;text-align:right;}
-/* prev badge on header */
-.prev-badge{background:var(--teal3);border:1px solid var(--teal2);border-radius:8px;padding:4px 10px;font-size:11px;color:var(--teal);font-weight:700;margin-top:6px;display:inline-block;}
-/* 入金サイクル */
-.cmp-table th.th-bank{color:var(--teal);}
-.cmp-table th.th-life{color:var(--amber);}
-.cmp-table th.th-tax{color:var(--ink3);}
-.cmp-table td.tax-plan{color:var(--ink3);}
-.cmp-table tr.hl td.tax-plan{color:var(--ink3);font-size:13px;}
+.deep-headline{font-family:"Zen Kaku Gothic New",sans-serif;font-size:18px;font-weight:900;margin-bottom:8px;line-height:1.3;}
+.deep-why{font-size:13px;color:var(--ink2);line-height:1.75;margin-bottom:14px;}
+.deep-action-box{background:var(--bg2);border-radius:8px;padding:14px;}
+.deep-action-label{font-size:11px;font-weight:700;color:var(--sun);margin-bottom:6px;}
+.deep-action-text{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:8px;}
+.deep-script-label{font-size:11px;color:var(--ink3);margin-bottom:6px;}
+.deep-script-text{background:var(--bg3);border-radius:8px;padding:12px;font-size:12px;color:var(--ink2);line-height:1.75;white-space:pre-wrap;word-break:break-all;margin-bottom:8px;}
 .lag-box{background:var(--amber3);border:1.5px solid var(--amber);border-radius:10px;padding:14px 16px;margin-top:12px;}
 .lag-title{font-size:13px;font-weight:700;color:var(--amber);margin-bottom:10px;}
 .lag-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
@@ -525,6 +443,54 @@ body{background:var(--bg);color:var(--ink);font-family:'Noto Sans JP',sans-serif
         <div class="metric"><div class="m-label">資金余命</div><div class="m-val" id="mMonths">—</div><div class="m-sub">ヶ月</div></div>
       </div>
       <div id="cashWarn"></div>
+      <!-- 詳細診断ボタン（赤・黄の時だけ表示） -->
+      <div id="deepDiagBtn" style="display:none;margin-top:14px">
+        <button type="button" class="deep-btn" onclick="openDeepDiag()">
+          🔍 どこからお金が減っているか詳しく見る
+        </button>
+        <div style="font-size:11px;color:var(--ink3);margin-top:6px;text-align:center">3つの質問に答えるだけ（2分）</div>
+      </div>
+    </div>
+
+    <!-- 詳細診断モーダル -->
+    <div id="deepDiagModal" style="display:none;position:fixed;inset:0;background:rgba(28,28,46,0.75);z-index:200;display:none;align-items:center;justify-content:center;padding:16px">
+      <div style="background:var(--bg2);border-radius:16px;max-width:560px;width:100%;max-height:90vh;overflow-y:auto;padding:24px 20px;box-shadow:var(--shadow2)">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+          <div style="font-family:'Zen Kaku Gothic New',sans-serif;font-size:17px;font-weight:900;color:var(--ink)">どこから血が出ているか確認する</div>
+          <button type="button" onclick="closeDeepDiag()" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--ink3)">✕</button>
+        </div>
+        <p style="font-size:12px;color:var(--ink3);margin-bottom:20px;line-height:1.7">※これは「診断の参考情報」です。実際の対応は税理士・金融機関にご確認ください。</p>
+
+        <!-- Q1 -->
+        <div class="field" style="margin-bottom:16px">
+          <label style="font-size:14px;font-weight:700;color:var(--ink2);margin-bottom:8px;display:block">Q1. 商品やサービスを売る時、仕入れや外注費はどれくらいかかりますか？</label>
+          <div class="toggle-group" id="grossMarginGroup" style="flex-wrap:wrap">
+            <button type="button" class="toggle-btn" data-gm="0.85" onclick="selectToggle(this,'grossMarginGroup')">ほぼかからない<br><span style="font-size:10px">（原価5〜15%）</span></button>
+            <button type="button" class="toggle-btn" data-gm="0.65" onclick="selectToggle(this,'grossMarginGroup')">少しかかる<br><span style="font-size:10px">（原価30%くらい）</span></button>
+            <button type="button" class="toggle-btn" data-gm="0.45" onclick="selectToggle(this,'grossMarginGroup')">半分くらい<br><span style="font-size:10px">（原価50%くらい）</span></button>
+            <button type="button" class="toggle-btn" data-gm="0.25" onclick="selectToggle(this,'grossMarginGroup')">かなりかかる<br><span style="font-size:10px">（原価70%以上）</span></button>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="field" style="margin-bottom:16px">
+          <label style="font-size:14px;font-weight:700;color:var(--ink2);margin-bottom:8px;display:block">Q2. 売上がゼロでも毎月必ず出ていくお金はいくらですか？</label>
+          <input type="number" id="fixedCostM" placeholder="例：150（家賃・人件費・リース・借入返済すべて込み・万円）" min="0" inputmode="numeric" style="width:100%;background:var(--bg3);border:1.5px solid var(--border);border-radius:10px;color:var(--ink);font-size:15px;padding:11px 14px;outline:none">
+          <div style="font-size:11px;color:var(--ink3);margin-top:5px">ざっくりでOK。家賃・人件費・リース・借入返済の合計額を入れてください</div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="field" style="margin-bottom:20px">
+          <label style="font-size:14px;font-weight:700;color:var(--ink2);margin-bottom:8px;display:block">Q3. 銀行などへの月々の返済合計はいくらですか？</label>
+          <input type="number" id="monthlyRepayM" placeholder="例：30（万円）" min="0" inputmode="numeric" style="width:100%;background:var(--bg3);border:1.5px solid var(--border);border-radius:10px;color:var(--ink);font-size:15px;padding:11px 14px;outline:none">
+          <div style="font-size:11px;color:var(--ink3);margin-top:5px">0でもOKです</div>
+        </div>
+
+        <button type="button" class="calc-btn" style="margin-bottom:0" onclick="runDeepDiag()">出血場所を確認する →</button>
+
+        <!-- 診断結果 -->
+        <div id="deepDiagResult" style="display:none;margin-top:20px"></div>
+      </div>
     </div>
 
     <div class="card">
@@ -770,6 +736,8 @@ function calculate(){
   let cwH='';
   if(mo<=3&&mcf<0)cwH=`<div class="danger-box"><b>⚠️ 支払いの優先順位（資金が逼迫している場合）</b><br>① 従業員への人件費　② 社会保険料（未納は追徴リスク大）　③ 銀行返済（事前相談で猶予交渉可）　④ 税金（延納・分割納付の相談余地あり）<br><br>「全部は払えない」状況になる前に、必ず銀行・税務署・税理士へ先手で相談してください。先手ほど選択肢が広がります。</div>`;
   document.getElementById('cashWarn').innerHTML=cwH;
+  // 詳細診断ボタン：赤・黄の時だけ表示
+  document.getElementById('deepDiagBtn').style.display=(sc==='s-red'||sc==='s-yellow')?'block':'none';
 
   // ② 役員報酬最適化
   function pl(pm){const y=pm*12,soc=cSoc(y,ag,pf),emp=Math.round(soc/2),inc=Math.max(0,y-sDed(y)),tx=cTax(inc,emp),take=y-tx-emp,cpr=Math.max(0,py-y-spY-(soc-emp)),ct=cCorp(cpr),net=py-tx-soc-ct;return{pm,y,soc,emp,tx,ct,net,take};}
@@ -1294,6 +1262,98 @@ function buildScripts(targetPlan, planLabel){
   scriptTabsEl.innerHTML=tabs.map(function(t,i){var cls='script-tab'+(i===0?' active':'');return '<button type="button" class="'+cls+'" onclick="switchScript('+i+')">'+t.label+'</button>';}).join('');
   showScript(0);
 }
+// ── 詳細診断モーダル ──
+function openDeepDiag(){
+  var modal=document.getElementById('deepDiagModal');
+  modal.style.display='flex';
+  document.getElementById('deepDiagResult').style.display='none';
+}
+function closeDeepDiag(){
+  document.getElementById('deepDiagModal').style.display='none';
+}
+
+function runDeepDiag(){
+  var gmBtn=document.querySelector('#grossMarginGroup .toggle-btn.active');
+  var gm=gmBtn?parseFloat(gmBtn.dataset.gm):null;
+  var fcEl=document.getElementById('fixedCostM');
+  var repEl=document.getElementById('monthlyRepayM');
+  var fc=(parseFloat(fcEl?fcEl.value:0)||0)*10000;
+  var rep=(parseFloat(repEl?repEl.value:0)||0)*10000;
+  var ms_val=window._mcf!==undefined?(window._mcf+(document.getElementById('monthlyExpense')?(parseFloat(document.getElementById('monthlyExpense').value)||0)*10000:0)):0;
+  var salesM=(parseFloat(document.getElementById('monthlySales').value)||0)*10000;
+
+  if(!gmBtn){alert('Q1を選択してください');return;}
+  if(!fc){alert('Q2を入力してください');return;}
+
+  // 各指標を計算
+  var grossProfit=salesM*gm; // 月次粗利
+  var bep=gm>0?fc/gm:0; // 損益分岐点売上高
+  var repRatio=grossProfit>0?rep/grossProfit:1; // 返済負担率
+  var bepRatio=salesM>0?bep/salesM:1; // 損益分岐点比率
+
+  // 出血タイプ判定（最も深刻な1つを選ぶ）
+  var type, headline, why, action, scriptText;
+
+  if(gm<=0.30){
+    type='gm';
+    headline='利益率が低い可能性があります';
+    why='売上の約'+Math.round((1-gm)*100)+'%が仕入れや外注費で消えているため、売上が増えても手元に残りにくい構造の可能性があります。価格転嫁が追いついていないか、原価が上がっているのに値上げできていないケースでよく見られます。';
+    action='一番売れている商品・サービスの原価をざっくり書き出してください。そこから「値上げできる余地はあるか」「仕入れを見直せるか」を税理士と確認するのが最初の一手です。';
+    scriptText=`先生、うちの利益率について確認したいです。\n売上に対して原価が${Math.round((1-gm)*100)}%くらいかかっているのですが、\nこのままだと資金繰り的に厳しいでしょうか？\n値上げか仕入れ見直しか、どちらから動くべきか相談させてください。`;
+  } else if(bepRatio>0.90){
+    type='fc';
+    headline='固定費が売上に対して重すぎる可能性があります';
+    var bepMan=man(Math.round(bep/10000)*10000);
+    var fcMan=man(Math.round(fc/10000)*10000);
+    why='売上が少し落ちるだけで赤字になる構造の可能性があります。損益分岐点（赤字にならない最低売上）の目安は月'+bepMan+'万円です。現在の売上との差が小さく、余裕がない状態です。';
+    action='今月払っている固定費を3つだけ書き出してください。その中で「すぐに減らせるもの」「交渉できるもの」を1つ特定するのが最初の一手です。';
+    scriptText=`先生、固定費の見直しについて相談したいです。\n毎月の固定費が約${fcMan}万円あり、\n損益分岐点が月${bepMan}万円くらいになっています。\nすぐに削れる固定費がないか一緒に確認してもらえますか？`;
+  } else if(repRatio>0.40){
+    type='rep';
+    headline='返済の負担が粗利に対して重い可能性があります';
+    var gpMan=man(Math.round(grossProfit/10000)*10000);
+    var repMan=man(Math.round(rep/10000)*10000);
+    why='月の粗利（約'+gpMan+'万円）に対して返済額（'+repMan+'万円）が'+Math.round(repRatio*100)+'%を占めています。稼いでも返済に消えてしまっている状態の可能性があります。';
+    action='今の返済先と返済額を一覧にしてください。その上で「リスケジュール（返済猶予）を相談できる金融機関がどこか」を確認するのが最初の一手です。';
+    scriptText=`お世話になっております。\n資金繰りについてご相談させてください。\n毎月の返済額が${repMan}万円あり、収益に対して重くなっています。\n返済条件の見直し（リスケジュール）について相談の機会をいただけますでしょうか。\n具体的な数字をお持ちします。`;
+  } else {
+    type='ok';
+    headline='入力された数字の範囲では大きな構造的問題は見当たりません';
+    why='粗利率・固定費・返済のバランスは入力値の範囲では許容範囲内です。資金ショートの原因は入金タイミングのズレや、季節変動・一時的な売上低下の可能性があります。';
+    action='資金繰り表（3ヶ月先までの入出金予定）を税理士と一緒に作ることをおすすめします。';
+    scriptText=`先生、資金繰り表を一緒に作りたいです。\n3ヶ月先の入出金の見通しが不安なので、\n簡単な資金繰り表のフォーマットを教えてもらえますか？`;
+  }
+
+  var scriptTarget=type==='rep'?'銀行担当者へ':'税理士へ';
+
+  var html='<div class="deep-result-box type-'+type+'">';
+  html+='<div class="deep-type-label" style="color:'+(type==='ok'?'var(--green)':'var(--red)')+'">'+
+    (type==='ok'?'✅ 診断結果':'🔴 最も影響が大きい可能性があるポイント')+'</div>';
+  html+='<div class="deep-headline">'+headline+'</div>';
+  html+='<div class="deep-why">'+why+'</div>';
+  html+='<div class="deep-action-box">';
+  html+='<div class="deep-action-label">🛠 今夜の一手</div>';
+  html+='<div class="deep-action-text">'+action+'</div>';
+  html+='<div class="deep-script-label">📩 '+scriptTarget+'（コピーしてそのまま送れます）</div>';
+  html+='<div class="deep-script-text" id="deepScriptText">'+scriptText+'</div>';
+  html+='<button type="button" class="copy-btn" onclick="copyDeepScript()">📋 この文章をコピーする</button>';
+  html+='</div></div>';
+  html+='<div style="font-size:11px;color:var(--ink3);line-height:1.6;margin-top:8px">※この診断は入力された3つの数字のみに基づく参考情報です。実際の状況は複合的な要因があるため、必ず税理士等の専門家にご相談ください。</div>';
+
+  var resultEl=document.getElementById('deepDiagResult');
+  resultEl.innerHTML=html;
+  resultEl.style.display='block';
+  window._deepScript=scriptText;
+}
+
+function copyDeepScript(){
+  var s=window._deepScript||'';
+  navigator.clipboard.writeText(s).then(function(){
+    var btn=document.querySelector('#deepDiagResult .copy-btn');
+    if(btn){btn.textContent='✅ コピーしました！';setTimeout(function(){btn.textContent='📋 この文章をコピーする';},3000);}
+  });
+}
+
 function showScript(idx){
   const s=window._scripts;if(!s||!s[idx])return;
   document.getElementById('scriptContent').innerHTML=`<div class="script-box">${s[idx].script.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>`;
