@@ -318,13 +318,19 @@ body{background:var(--bg);color:var(--ink);font-family:'Noto Sans JP',sans-serif
     <div class="field f-gap">
       <label>会社の年間利益の入力方法</label>
       <div class="toggle-group" id="profitModeGroup">
-        <button type="button" class="toggle-btn active" data-mode="easy" onclick="switchProfitMode(this,'easy')">💡 かんたん（感覚で入力）</button>
-        <button type="button" class="toggle-btn" data-mode="exact" onclick="switchProfitMode(this,'exact')">数字で入力</button>
+        <button type="button" class="toggle-btn active" data-mode="auto" onclick="switchProfitMode(this,'auto')">🔄 Step1から自動計算</button>
+        <button type="button" class="toggle-btn" data-mode="easy" onclick="switchProfitMode(this,'easy')">💡 かんたん（感覚で入力）</button>
+        <button type="button" class="toggle-btn" data-mode="exact" onclick="switchProfitMode(this,'exact')">数字で正確に入力</button>
       </div>
     </div>
 
+    <!-- 自動計算モード -->
+    <div id="autoProfitBlock" class="f-gap">
+      <div id="autoProfitResult" class="easy-result"></div>
+    </div>
+
     <!-- かんたんモード -->
-    <div id="easyProfitBlock" class="f-gap">
+    <div id="easyProfitBlock" class="f-gap" style="display:none">
       <div class="field">
         <label>月の売上（ざっくり） <span class="sub-label">（万円）</span></label>
         <div class="toggle-group" id="salesPresetGroup" style="flex-wrap:wrap">
@@ -360,7 +366,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Noto Sans JP',sans-serif
     <input type="hidden" id="profitYEasy" value="0">
   </div>
 
-  <button type="button" class="expand-toggle" id="expandToggle" onclick="toggleExpand()">もっと詳しく計算する（配偶者報酬・借入金・消費税・自宅家賃など）</button>
+  <button type="button" class="expand-toggle" id="expandToggle" onclick="toggleExpand()">この数字をもう少し正確にする（配偶者・借入金・消費税など・2分）</button>
 
   <div class="expand-body" id="expandBody">
     <div class="card amber-accent">
@@ -493,6 +499,15 @@ body{background:var(--bg);color:var(--ink);font-family:'Noto Sans JP',sans-serif
       </div>
     </div>
 
+    <!-- ③ 誤差バー + 確認メッセージ -->
+    <div id="uncertaintyBar" style="display:none;background:var(--amber3);border:1.5px solid var(--amber);border-radius:10px;padding:12px 16px;margin-bottom:16px">
+      <div style="font-size:13px;font-weight:700;color:var(--amber);margin-bottom:4px">📌 この計算結果を使う前に</div>
+      <div id="uncertaintyText" style="font-size:12px;color:var(--ink2);line-height:1.75"></div>
+      <div style="margin-top:10px">
+        <button type="button" style="background:var(--teal);color:#fff;border:none;border-radius:8px;padding:8px 16px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif" onclick="document.getElementById('uncertaintyBar').style.display='none'">確認しました</button>
+      </div>
+    </div>
+
     <div class="card">
       <div class="r-title">役員報酬の最適化</div>
       <div id="planBadges" style="display:none"></div>
@@ -581,9 +596,32 @@ function toggleExpand(){const b=document.getElementById('expandBody'),t=document
 function switchProfitMode(btn,mode){
   document.querySelectorAll('#profitModeGroup .toggle-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
+  document.getElementById('autoProfitBlock').style.display=mode==='auto'?'block':'none';
   document.getElementById('easyProfitBlock').style.display=mode==='easy'?'block':'none';
   document.getElementById('exactProfitBlock').style.display=mode==='exact'?'block':'none';
+  if(mode==='auto')updateAutoProfit();
   if(mode==='easy')updateEasyProfit();
+}
+
+function updateAutoProfit(){
+  var ms=(parseFloat(document.getElementById('monthlySales').value)||0);
+  var me=(parseFloat(document.getElementById('monthlyExpense').value)||0);
+  var cp=(parseFloat(document.getElementById('currentPayM').value)||0);
+  if(ms<=0){
+    document.getElementById('autoProfitResult').innerHTML='<div class="er-label">Step1の売上・支出を入力すると自動計算されます</div>';
+    document.getElementById('profitYEasy').value=0;
+    return;
+  }
+  // 年間利益(報酬控除前) = (月売上 - 月支出 + 役員報酬) × 12
+  // 支出に役員報酬が含まれている前提で、報酬を戻してから年換算
+  var profitEstMan=Math.round((ms-me+cp)*12);
+  if(profitEstMan<0)profitEstMan=0;
+  document.getElementById('profitYEasy').value=profitEstMan;
+  var el=document.getElementById('autoProfitResult');
+  el.innerHTML='<div class="er-label">年間利益（役員報酬控除前）の自動推計</div>'+
+    '<div class="er-val">約 '+profitEstMan.toLocaleString("ja-JP")+' 万円</div>'+
+    '<div class="er-note">（月売上'+ms+'万 − 月支出'+me+'万 + 報酬'+cp+'万）× 12ヶ月 で推計しています。<br>'+
+    '※月によって変動がある場合は「数字で正確に入力」をお使いください。</div>';
 }
 
 function selectSalesPreset(btn){
@@ -644,10 +682,12 @@ function calculate(){
   }
   // かんたんモードか数字入力モードかを判断
   const _pmBtn=document.querySelector('#profitModeGroup .toggle-btn.active');
-  const isEasyMode=(_pmBtn&&_pmBtn.dataset&&_pmBtn.dataset.mode==='easy');
-  const pyRaw=isEasyMode
-    ?(parseFloat(document.getElementById('profitYEasy').value)||0)
-    :(parseFloat(document.getElementById('profitY').value)||0);
+  const _profitMode=(_pmBtn&&_pmBtn.dataset)?_pmBtn.dataset.mode:'auto';
+  // autoモードの場合はStep1から再計算
+  if(_profitMode==='auto'){updateAutoProfit();}
+  const pyRaw=_profitMode==='exact'
+    ?(parseFloat(document.getElementById('profitY').value)||0)
+    :(parseFloat(document.getElementById('profitYEasy').value)||0);
   const py=pyRaw*10000;
   const sp=(parseFloat(document.getElementById('spousePayM').value)||0)*10000;
   const sk=(parseFloat(document.getElementById('shakkinBalance').value)||0)*10000;
@@ -1171,6 +1211,18 @@ ${dateStr}`:'';
   var tabsEl2=document.getElementById('scriptTabs');
   tabsEl2.innerHTML=tabs.map((t,i)=>`<button type="button" class="script-tab${i===0?' active':''}" onclick="switchScript(${i})">${t.label}</button>`).join('');
   showScript(0);
+
+  // ③ 誤差バーと確認メッセージを表示
+  var uBar=document.getElementById('uncertaintyBar');
+  var uText=document.getElementById('uncertaintyText');
+  var modeLabel=_profitMode==='auto'?'Step1の数字から自動推計':_profitMode==='easy'?'感覚値から推計':'手入力';
+  var rangeMin=man(Math.round(nco*0.8));
+  var rangeMax=man(Math.round(nco*1.2));
+  uText.innerHTML=
+    'この結果は目安です（±20%）。<br>'+
+    'ただし<b>「今やるべき優先順位」はほぼ変わりません。</b><br>'+
+    '<span style="font-size:11px;color:var(--ink3)">手残りの目安：'+rangeMin+'万円〜'+rangeMax+'万円の範囲。役員報酬の変更・借入相談は必ず税理士に確認してから動いてください。</span>';
+  uBar.style.display='block';
 
   document.getElementById('results').style.display='block';
   document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
