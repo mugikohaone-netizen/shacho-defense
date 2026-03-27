@@ -377,6 +377,40 @@ body{background:var(--bg);color:var(--ink);font-family:'Noto Sans JP',sans-serif
         <input type="number" id="shakkinBalance" placeholder="例：500" min="0" inputmode="numeric">
         <div class="hint">社長が過去に会社に貸したお金。決算書の「短期借入金（役員）」で確認できます</div>
       </div>
+
+      <div class="field f-gap">
+        <label>扶養している家族はいますか？ <span class="sub-label">（配偶者以外・子どもなど）</span></label>
+        <div class="toggle-group" id="dependentsGroup">
+          <button type="button" class="toggle-btn active" data-val="0" onclick="selectToggle(this,'dependentsGroup')">いない</button>
+          <button type="button" class="toggle-btn" data-val="1" onclick="selectToggle(this,'dependentsGroup')">1人</button>
+          <button type="button" class="toggle-btn" data-val="2" onclick="selectToggle(this,'dependentsGroup')">2人</button>
+          <button type="button" class="toggle-btn" data-val="3" onclick="selectToggle(this,'dependentsGroup')">3人以上</button>
+        </div>
+        <div class="hint" style="margin-top:5px">1人につき年間約38万円の控除。子ども・親の扶養が対象（配偶者は別途考慮済み）</div>
+      </div>
+
+      <div class="field f-gap">
+        <label>住宅ローン控除はありますか？ <span class="sub-label">（年末残高の0.7%が税額控除）</span></label>
+        <div class="toggle-group" id="mortgageGroup">
+          <button type="button" class="toggle-btn active" data-val="0" onclick="selectToggle(this,'mortgageGroup')">ない</button>
+          <button type="button" class="toggle-btn" data-val="1" onclick="selectToggle(this,'mortgageGroup')">ある（残高〜2000万）</button>
+          <button type="button" class="toggle-btn" data-val="2" onclick="selectToggle(this,'mortgageGroup')">ある（残高2000〜4000万）</button>
+          <button type="button" class="toggle-btn" data-val="3" onclick="selectToggle(this,'mortgageGroup')">ある（残高4000万以上）</button>
+        </div>
+        <div class="hint" style="margin-top:5px">住宅ローン残高×0.7%が所得税・住民税から直接引かれます（最大35万円/年）</div>
+      </div>
+
+      <div class="field f-gap">
+        <label>生命保険料を払っていますか？ <span class="sub-label">（個人契約分のみ）</span></label>
+        <div class="toggle-group" id="lifeInsGroup">
+          <button type="button" class="toggle-btn active" data-val="0" onclick="selectToggle(this,'lifeInsGroup')">払っていない</button>
+          <button type="button" class="toggle-btn" data-val="40000" onclick="selectToggle(this,'lifeInsGroup')">少し（控除額2万円）</button>
+          <button type="button" class="toggle-btn" data-val="80000" onclick="selectToggle(this,'lifeInsGroup')">そこそこ（控除額4万円）</button>
+          <button type="button" class="toggle-btn" data-val="120000" onclick="selectToggle(this,'lifeInsGroup')">多め（控除額6万円）</button>
+        </div>
+        <div class="hint" style="margin-top:5px">法人契約の保険は除きます。個人で払っている生命保険・医療保険・個人年金が対象</div>
+      </div>
+
       <div class="field f-gap">
         <label>都道府県</label>
         <select id="prefecture">
@@ -657,14 +691,89 @@ function updateEasyProfit(){
     <div class="er-val">約 ${profitEstMan.toLocaleString('ja-JP')} 万円</div>
     <div class="er-note">月売上 ${salesM}万円 × 12ヶ月 × 利益率${Math.round(margin*100)}% + 報酬年額 = 推計値です。<br>正確でなくても大丈夫です。後から修正できます。</div>`;
 }
-const SB=[[0,63000,58000],[63000,73000,68000],[73000,83000,78000],[83000,93000,88000],[93000,101000,98000],[101000,107000,104000],[107000,114000,110000],[114000,122000,118000],[122000,130000,126000],[130000,138000,134000],[138000,146000,142000],[146000,155000,150000],[155000,165000,160000],[165000,175000,170000],[175000,185000,180000],[185000,195000,190000],[195000,210000,200000],[210000,230000,220000],[230000,250000,240000],[250000,270000,260000],[270000,290000,280000],[290000,310000,300000],[310000,330000,320000],[330000,350000,340000],[350000,370000,360000],[370000,395000,380000],[395000,425000,410000],[425000,455000,440000],[455000,485000,470000],[485000,515000,500000],[515000,545000,530000],[545000,575000,560000],[575000,605000,590000],[605000,635000,620000],[635000,665000,650000],[665000,695000,680000],[695000,730000,710000],[730000,770000,750000],[770000,810000,790000],[810000,855000,830000],[855000,905000,880000],[905000,955000,930000],[955000,1005000,980000],[1005000,1055000,1030000],[1055000,1115000,1090000],[1115000,1175000,1150000],[1175000,1235000,1210000],[1235000,1295000,1270000],[1295000,1355000,1330000],[1355000,999999999,1390000]];
-const HR={Tokyo:0.0998,Kanagawa:0.1000,Osaka:0.1021,Aichi:0.0987,Saitama:0.1000,Chiba:0.1000,Hokkaido:0.1031,Fukuoka:0.1035,other:0.1000};
-function gH(m){const b=SB.find(b=>m>=b[0]&&m<b[1])||SB[SB.length-1];return Math.max(58000,b[2]);}
-function gP(m){const b=SB.find(b=>m>=b[0]&&m<b[1])||SB[SB.length-1];return Math.max(88000,b[2]);}
-function cSoc(y,age,pref){if(y<=0)return 0;const m=y/12,hR=(HR[pref]||0.1000)+(age>=40&&age<75?0.016:0),h=gH(m)*hR,p=age<70?gP(m)*0.183:0;return Math.round((h+p)*12);}
-function sDed(g){if(g<=1625000)return 650000;if(g<=1800000)return g*0.4;if(g<=3600000)return g*0.3+180000;if(g<=6600000)return g*0.2+540000;if(g<=8500000)return g*0.1+1200000;return 2050000;}
-function cTax(inc,soc,od=0){const basic=inc<=23500000?580000:0;const t=Math.max(0,Math.floor((inc-soc-basic-od)/1000)*1000);let it=0;if(t<=1950000)it=t*0.05;else if(t<=3300000)it=t*0.10-97500;else if(t<=6950000)it=t*0.20-427500;else if(t<=9000000)it=t*0.23-636000;else if(t<=18000000)it=t*0.33-1536000;else if(t<=40000000)it=t*0.40-2796000;else it=t*0.45-4796000;it=Math.round(it*1.021/100)*100;const rt=inc>450000?6000+Math.round(t*0.10/100)*100:0;return it+rt;}
-function cCorp(p){if(p<=0)return 70000;const r=Math.floor(p/1000)*1000;return Math.round((r<=8000000?r*0.235:8000000*0.235+(r-8000000)*0.336)/100)*100+70000;}
+const BRACKETS=[
+  [0,63000,58000,88000],[63000,73000,68000,88000],[73000,83000,78000,88000],
+  [83000,93000,88000,88000],[93000,101000,98000,98000],[101000,107000,104000,104000],
+  [107000,114000,110000,110000],[114000,122000,118000,118000],[122000,130000,126000,126000],
+  [130000,138000,134000,134000],[138000,146000,142000,142000],[146000,155000,150000,150000],
+  [155000,165000,160000,160000],[165000,175000,170000,170000],[175000,185000,180000,180000],
+  [185000,195000,190000,190000],[195000,210000,200000,200000],[210000,230000,220000,220000],
+  [230000,250000,240000,240000],[250000,270000,260000,260000],[270000,290000,280000,280000],
+  [290000,310000,300000,300000],[310000,330000,320000,320000],[330000,350000,340000,340000],
+  [350000,370000,360000,360000],[370000,395000,380000,380000],[395000,425000,410000,410000],
+  [425000,455000,440000,440000],[455000,485000,470000,470000],[485000,515000,500000,500000],
+  [515000,545000,530000,530000],[545000,575000,560000,560000],[575000,605000,590000,590000],
+  [605000,635000,620000,620000],[635000,665000,650000,650000],[665000,695000,680000,650000],
+  [695000,730000,710000,650000],[730000,770000,750000,650000],[770000,810000,790000,650000],
+  [810000,855000,830000,650000],[855000,905000,880000,650000],[905000,955000,930000,650000],
+  [955000,1005000,980000,650000],[1005000,1055000,1030000,650000],[1055000,1115000,1090000,650000],
+  [1115000,1175000,1150000,650000],[1175000,1235000,1210000,650000],[1235000,1295000,1270000,650000],
+  [1295000,1355000,1330000,650000],[1355000,99999999,1390000,650000],
+];
+const HEALTH_RATES={Tokyo:0.0991,Kanagawa:0.1000,Osaka:0.1032,Aichi:0.1000,Saitama:0.1000,Chiba:0.1000,Hokkaido:0.1063,Fukuoka:0.1060,other:0.1000};
+const RATE_NURSING=0.0159;
+const RATE_PENSION=0.1830;
+function getBracket(m){return BRACKETS.find(function(b){return m>=b[0]&&m<b[1];})||BRACKETS[BRACKETS.length-1];}
+function cSoc(y,age,pref){
+  if(y<=0)return{total:0,emp:0};
+  var rH=HEALTH_RATES[pref]||0.1000;
+  var m=Math.floor(y/12);
+  var b=getBracket(m);
+  var stdH=b[2],stdP=b[3];
+  var hC=stdH*rH;
+  var nC=age>=40?stdH*RATE_NURSING:0;
+  var pC=age<70?stdP*RATE_PENSION:0;
+  var total=Math.floor((hC+nC+pC)*12);
+  var emp=Math.floor(total/2);
+  return{total:total,emp:emp};
+}
+function sDed(g){
+  if(g<=1900000)return 650000;
+  if(g<=3600000)return Math.floor(g*0.3+80000);
+  if(g<=6600000)return Math.floor(g*0.2+440000);
+  if(g<=8500000)return Math.floor(g*0.1+1100000);
+  return 1950000;
+}
+function calcBasicDed(income){
+  if(income<=1320000)return 950000;
+  if(income<=3360000)return 880000;
+  if(income<=4890000)return 680000;
+  if(income<=6550000)return 630000;
+  if(income<=23500000)return 580000;
+  if(income<=24000000)return 480000;
+  if(income<=24500000)return 320000;
+  if(income<=25000000)return 160000;
+  return 0;
+}
+function calcIncomeTax(t){
+  var it=0;
+  if(t<=1950000)it=t*0.05;
+  else if(t<=3300000)it=t*0.10-97500;
+  else if(t<=6950000)it=t*0.20-427500;
+  else if(t<=9000000)it=t*0.23-636000;
+  else if(t<=18000000)it=t*0.33-1536000;
+  else if(t<=40000000)it=t*0.40-2796000;
+  else it=t*0.45-4796000;
+  return Math.floor(it*1.021);
+}
+function calcResidentTax(t){
+  if(t<=0)return 5000;
+  return Math.floor(t*0.10)+5000;
+}
+function cTax(inc,socEmp,extraDed){
+  extraDed=extraDed||0;
+  var empDed=sDed(inc);
+  var income=Math.max(0,inc-empDed);
+  var basicDed=calcBasicDed(income);
+  var taxable=Math.max(0,income-socEmp-extraDed-basicDed);
+  return calcIncomeTax(taxable)+calcResidentTax(taxable);
+}
+function cCorp(p){
+  if(p<=0)return 70000;
+  var r=Math.floor(p/1000)*1000;
+  if(r<=8000000)return Math.round(r*0.15)+70000;
+  return Math.round(8000000*0.15+(r-8000000)*0.232)+70000;
+}
 function man(y){return Math.round(y/10000).toLocaleString('ja-JP');}
 function mS(y){return man(y)+'万円';}
 
@@ -693,6 +802,19 @@ function calculate(){
   const sk=(parseFloat(document.getElementById('shakkinBalance').value)||0)*10000;
   const mt=(parseFloat(document.getElementById('minTakeHomeM').value)||0)*10000;
   const pf=document.getElementById('prefecture').value;
+
+  // 新控除の読み込み
+  const _depBtn=document.querySelector('#dependentsGroup .toggle-btn.active');
+  const deps=_depBtn?parseInt(_depBtn.dataset.val):0;
+
+  const _mortBtn=document.querySelector('#mortgageGroup .toggle-btn.active');
+  const mortgageLevel=_mortBtn?parseInt(_mortBtn.dataset.val):0;
+  // 住宅ローン控除額（税額控除・年間）
+  // 残高〜2000万:14万、2000〜4000万:28万、4000万以上:35万（上限）
+  const mortgageCreditY=[0,140000,280000,350000][mortgageLevel]||0;
+
+  const _lifeBtn=document.querySelector('#lifeInsGroup .toggle-btn.active');
+  const lifeInsDed=_lifeBtn?parseInt(_lifeBtn.dataset.val):0; // 所得控除額
 
   // 前回データ読込（比較用）
   const prevData=loadPrev();
@@ -780,7 +902,21 @@ function calculate(){
   document.getElementById('deepDiagBtn').style.display=(sc==='s-red'||sc==='s-yellow')?'block':'none';
 
   // ② 役員報酬最適化
-  function pl(pm){const y=pm*12,soc=cSoc(y,ag,pf),emp=Math.round(soc/2),inc=Math.max(0,y-sDed(y)),tx=cTax(inc,emp),take=y-tx-emp,cpr=Math.max(0,py-y-spY-(soc-emp)),ct=cCorp(cpr),net=py-tx-soc-ct;return{pm,y,soc,emp,tx,ct,net,take};}
+  function pl(pm){
+    var y=pm*12;
+    var socObj=cSoc(y,ag,pf);
+    var soc=socObj.total,emp=socObj.emp;
+    // 扶養控除・生命保険控除を所得控除として追加（cTaxの第3引数）
+    var extraDed=deps*380000+lifeInsDed;
+    var rawTax=cTax(y,emp,extraDed);
+    // 住宅ローン控除は税額控除（税額から直接引く）
+    var tx=Math.max(0,rawTax-mortgageCreditY);
+    var take=y-tx-emp;
+    var cpr=Math.max(0,py-y-spY-(soc-emp));
+    var ct=cCorp(cpr);
+    var net=py-tx-soc-ct;
+    return{pm:pm,y:y,soc:soc,emp:emp,tx:tx,ct:ct,net:net,take:take};
+  }
   const now=pl(cp);
   const cs=[];for(let p=80000;p<=cp;p+=10000)cs.push(p);
   [88000,98000,104000,110000,118000,126000,134000,142000,150000,160000,170000,180000,190000,200000,220000,240000,260000,280000,300000,320000,340000,360000,380000].forEach(v=>{if(v<=cp)cs.push(v);});
